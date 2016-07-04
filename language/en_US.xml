@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+    
+    <description>
+        Category tree maintenance
+    </description>
+
+    <admin>
+        <menu_items>
+            <admin_menu_caption>Categories</admin_menu_caption>
+        </menu_items>
+    </admin>
+    
+    <index>
+        <title>Categories</title>
+        <buttons>
+            <add>New</add>
+        </buttons>
+    </index>
+    
+    <record_nav>
+        <placeholder>Search by id, slug, title or description</placeholder>
+        <columns>
+            <title>
+                <caption>Category</caption>
+                <order_asc  id="3">Order by category title ascending</order_asc>
+                <order_desc id="4">Order by category title descending</order_desc>
+            </title>
+            <description>
+                <caption>Description</caption>
+            </description>
+            <visibility>
+                <caption>Visibility</caption>
+                <order_asc  id="5">Order by visibility + category title ascending</order_asc>
+                <order_desc id="6">Order by visibility + category title descending</order_desc>
+            </visibility>
+            <min_level>
+                <caption>Req level</caption>
+                <order_asc  id="5">Order by required level + category title ascending</order_asc>
+                <order_desc id="6">Order by required level + category title descending</order_desc>
+            </min_level>
+        </columns>
+    </record_nav>
+    
+    <form>
+        <add_title>New category</add_title>
+        <edit_title>Editing category</edit_title>
+        <fields>
+            <title>
+                <caption>Title</caption>
+                <info><![CDATA[
+                    The name of the category. Must be unique.
+                ]]></info>
+            </title>
+            <slug>
+                <caption>Slug</caption>
+                <info><![CDATA[
+                    URL handler for the category. It must be made of lowercased letters,
+                    numbers, hyphens and underscores.
+                ]]></info>
+            </slug>
+            <description>
+                <caption>Description</caption>
+                <info><![CDATA[
+                    Short description of the category. It will be displayed as needed.
+                    Basic HTML is supported.
+                ]]></info>
+            </description>
+            <visibility>
+                <caption>Visibility</caption>
+                <options>
+                    <public>
+                        <caption>Public</caption>
+                        <info><![CDATA[
+                            Everyone, registered or not, will see items in this category.
+                        ]]></info>
+                    </public>
+                    <users>
+                        <caption>Only registered users</caption>
+                        <info><![CDATA[
+                            Only registered users with an open session will see items in this category.
+                        ]]></info>
+                    </users>
+                    <level_based>
+                        <caption>By user level</caption>
+                        <info><![CDATA[
+                            Only users with a minimum level will see items in this category.
+                        ]]></info>
+                    </level_based>
+                </options>
+            </visibility>
+            <min_level>
+                <caption>Minimum Level:</caption>
+                <info><![CDATA[
+                    Select the minimum user level that will access this category.
+                    All users from the selected level an up will apply.
+                ]]></info>
+            </min_level>
+            <parent_category>
+                <caption>Parent category</caption>
+                <info><![CDATA[
+                    If you want to make a category tree, use this selector to
+                    specify the parent for this category.
+                ]]></info>
+            </parent_category>
+        </fields>
+    </form>
+    
+</language>
