@@ -80,11 +80,12 @@ switch( $order )
 }
 
 $records = $repository->find($where, $limit, $offset, $sqlorder);
+$tree    = $repository->get_slug_paths();
 #endregion
 ?>
 
 <h1 class="clearfix">
-    <button class="pull-right" onclick="$('#filter_form').submit()">
+    <button id="refresh_category_browser" class="pull-right" onclick="$('#filter_form').submit()">
         <span class="fa fa-refresh"></span>
         <?= $language->refresh ?>
     </button>
@@ -97,7 +98,7 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
     </button>
 </h1>
 
-<div class="navcontrols clearfix">
+<div class="filtering clearfix">
     <form name="filter_form" id="filter_form" action="<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<? echo mt_rand(1, 65535); ?>"
           method="get">
         
@@ -146,29 +147,39 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
                 <th align="<?= $this_cell->xalign ?>" <? if( $this_cell->xnowrap == true ) echo "nowrap "; ?>
                     <? if( ! empty($this_cell->xwidth) ) echo "width='$this_cell->xwidth' "; ?> class="<?= $this_cell->xclass ?>"><?
                     if( $this_cell->sort_asc->enabled == true ) echo "<img
-                    src='{$_root_url}/media/icons/order_asc" . ($order == $this_cell->sort_asc->order ? "_this" : "") . ".gif' 
+                    src='{$_ROOT_URL}/media/icons/order_asc" . ($order == $this_cell->sort_asc->order ? "_this" : "") . ".gif' 
                     align='absmiddle' width='7' height='7'  style='cursor: pointer;'
                     alt='{$this_cell->sort_asc->alt}' title='{$this_cell->sort_asc->alt}'
                     onclick=\"document.filter_form.order.value='{$this_cell->sort_asc->order}'; document.filter_form.submit();\">&nbsp;";
                     ?><?= $this_cell->content ?><?
                     if( $this_cell->sort_desc->enabled == true ) echo "&nbsp;<img
-                    src='{$_root_url}/media/icons/order_desc" . ($order == $this_cell->sort_desc->order ? "_this" : "") . ".gif' 
+                    src='{$_ROOT_URL}/media/icons/order_desc" . ($order == $this_cell->sort_desc->order ? "_this" : "") . ".gif' 
                     align='absmiddle' width='7' height='7'  style='cursor: pointer;'
                     alt='{$this_cell->sort_desc->alt}' title='{$this_cell->sort_desc->alt}'
                     onclick=\"document.filter_form.order.value='{$this_cell->sort_desc->order}'; document.filter_form.submit();\">";
                     ?></th>
             <? endforeach; ?>
-            <th nowrap align="center"><?= $language->record_nav->actions ?></th>
         </tr>
         </thead>
-    
+        
         <tbody>
         <? foreach( $records as $row ): ?>
-        
             <tr data-record-id="<?= $row->id_category ?>">
                 <td>
-                    <?= $row->title ?><br>
-                    <i><?= $row->slug ?></i>
+                    <div><i><?= $tree[$row->id_category] ?></i></div>
+                    <div class="principal_data"><?= $row->title ?></div>
+                    <div class="actions">
+                        <span class="action pseudo_link disabled">
+                            <span class="fa fa-pencil"></span>
+                            <?= $current_module->language->form->actions->edit ?>
+                        </span>
+                        <? if($row->id_category != "uncategorized"): ?>
+                            <span class="action pseudo_link disabled">
+                                <span class="fa fa-trash"></span>
+                                <?= $current_module->language->form->actions->delete ?>
+                            </span>
+                        <? endif; ?>
+                    </div>
                 </td>
                 <td>
                     <?= $row->description ?>
@@ -185,6 +196,6 @@ $records = $repository->find($where, $limit, $offset, $sqlorder);
     </table>
 </div>
 
-<div id="pagination">
+<div class="pagination">
     <? $browser->render_pagination_controls("paginate", $pagination); ?>
 </div>

@@ -12,4 +12,12 @@ class category_record extends abstract_record
     public $description;
     public $visibility;
     public $min_level;
+    
+    public $parent_category_slug;
+    public $parent_category_title;
+    
+    public function set_new_id()
+    {
+        $this->id_category = uniqid();
+    }
 }

@@ -21,8 +21,8 @@ if( $module_install_action == "install" )
     $query = "
         CREATE TABLE IF NOT EXISTS categories (
             
-            id_category       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-            parent_category   BIGINT UNSIGNED NOT NULL DEFAULT 0,
+            id_category       VARCHAR(32) NOT NULL DEFAULT '',
+            parent_category   VARCHAR(32) NOT NULL DEFAULT '',
             
             slug              VARCHAR(128) NOT NULL DEFAULT '',
             title             VARCHAR(255) NOT NULL DEFAULT '',
@@ -51,6 +51,17 @@ if( $module_install_action == "install" )
             array('categories', $e->getMessage())
         );
     }
+    
+    $database->exec("
+        insert ignore into categories set
+          id_category     = 'uncategorized',
+          parent_category = '',
+          slug            = 'uncategorized',
+          title           = 'Uncategorized',
+          description     = 'Uncategorized items',
+          visibility      = 'public',
+          min_level       = '0'
+    ");
     
     return;
 }

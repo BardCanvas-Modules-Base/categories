@@ -29,7 +29,7 @@
 <div id="form_workarea" style="display: none;">
     
     <h1 class="clearfix for_addition">
-        <button class="pull-right" onclick="hide_category_addition_form()">
+        <button class="pull-right" onclick="hide_category_form()">
             <span class="fa fa-reply"></span>
             <?= $language->return ?>
         </button>
@@ -38,7 +38,7 @@
     </h1>
     
     <h1 class="clearfix for_edition" style="display: none">
-        <button class="pull-right" onclick="hide_category_addition_form()">
+        <button class="pull-right" onclick="hide_category_form()">
             <span class="fa fa-reply"></span>
             <?= $language->return ?>
         </button>

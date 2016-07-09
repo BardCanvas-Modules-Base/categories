@@ -102,8 +102,28 @@
                     If you want to make a category tree, use this selector to
                     specify the parent for this category.
                 ]]></info>
+                <none>None</none>
             </parent_category>
         </fields>
+        <actions>
+            <edit>Edit</edit>
+            <delete>Delete</delete>
+        </actions>
     </form>
+    
+    <messages>
+        <missing>
+            <title>Please specify a title for the category</title>
+            <slug>Please specify a slug for the category</slug>
+            <visibility>Please specify the visibility for the category.</visibility>
+        </missing>
+        <invalid>
+            <visibility>The visibility you specified is invalid.</visibility>
+            <min_level>The specified minimum level for visibility is invalid.</min_level>
+            <parent_category>The parent category can't be found.</parent_category>
+            <slug>The slug you specified contains invalid characters. Please use only lowercased letters, numbers, hyphens and underscores.</slug>
+        </invalid>
+        <slug_already_used>The slug you specified is already used. Please specify another.</slug_already_used>
+    </messages>
     
 </language>
