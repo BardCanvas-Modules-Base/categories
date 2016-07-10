@@ -137,10 +137,10 @@
              
             Do you want to continue?
         ]]></delete_confirmation>
-        <cannot_delete_default>The 'default' category cannot be deleted.</cannot_delete_default>
+        <cannot_delete_default>The default category cannot be deleted.</cannot_delete_default>
         <category_deleted><![CDATA[
             Category {$name} successfully deleted. {$children} subcategories deleted.
-            {$items} items moved to "default" category.
+            {$items} items moved to default category.
         ]]></category_deleted>
     </messages>
     

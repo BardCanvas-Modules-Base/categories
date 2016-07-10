@@ -184,7 +184,7 @@ $tree    = $repository->get_slug_paths();
                             <span class="fa fa-copy"></span>
                             <?= $current_module->language->record_nav->actions->copy ?>
                         </span>
-                        <? if($row->id_category != "default"): ?>
+                        <? if($row->id_category != "0000000000000"): ?>
                             <span class="action pseudo_link" onclick="delete_category('<?= $row->id_category ?>')">
                                 <span class="fa fa-trash"></span>
                                 <?= $current_module->language->record_nav->actions->delete ?>

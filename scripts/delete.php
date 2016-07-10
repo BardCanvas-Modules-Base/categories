@@ -23,7 +23,7 @@ $count      = $repository->get_record_count(array("id_category" => $_GET["id_cat
 
 if( $count == 0 ) die($current_module->language->messages->category_not_found);
 
-if( $_GET["id_category"] == "default" ) die($current_module->language->messages->cannot_delete_default);;
+if( $_GET["id_category"] == "0000000000000" ) die($current_module->language->messages->cannot_delete_default);;
 
 $deleted = $repository->delete($_GET["id_category"]);
 
