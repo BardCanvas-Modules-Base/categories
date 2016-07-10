@@ -13,7 +13,6 @@ use hng2_modules\categories\categories_repository;
 include "../../config.php";
 include "../../includes/bootstrap.inc";
 if( ! $account->_is_admin ) throw_fake_404();
-session_start();
 
 $repository = new categories_repository();
 

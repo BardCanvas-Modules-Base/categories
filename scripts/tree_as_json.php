@@ -11,7 +11,6 @@ use hng2_modules\categories\categories_repository;
 
 include "../../config.php";
 include "../../includes/bootstrap.inc";
-session_start();
 
 header("Content-Type: application/json; charset=utf-8");
 
