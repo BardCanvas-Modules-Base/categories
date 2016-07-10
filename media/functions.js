@@ -27,21 +27,88 @@ function prepare_category_addition()
     update_category_selector();
 }
 
-function prepare_category_edition(id_category)
+function edit_category(id_category)
 {
+    var url    = $_ROOT_URL + '/categories/scripts/get_as_json.php';
+    var params = {
+        'id_category': id_category,
+        'wasuuup'    : parseInt(Math.random() * 1000000000000000)
+    };
     
+    $.blockUI(blockUI_default_params);
+    $.getJSON(url, params, function(data)
+    {
+        if( data.message != 'OK' )
+        {
+            $.unblockUI();
+            alert(data.message);
+            
+            return;
+        }
     
-    
-    
-    
-    
-    reset_category_form();
-    show_category_form();
-    update_category_selector();
+        var record = data.data;
+        var $form  = $('#category_form');
+        
+        reset_category_form();
+        fill_category_form($form, record);
+        $.unblockUI();
+        show_category_form();
+        update_category_selector(record.parent_category);
+    });
 }
 
-function update_category_selector()
+function copy_category(id_category)
 {
+    var url    = $_ROOT_URL + '/categories/scripts/get_as_json.php';
+    var params = {
+        'id_category': id_category,
+        'wasuuup'    : parseInt(Math.random() * 1000000000000000)
+    };
+    
+    $.blockUI(blockUI_default_params);
+    $.getJSON(url, params, function(data)
+    {
+        if( data.message != 'OK' )
+        {
+            $.unblockUI();
+            alert(data.message);
+            
+            return;
+        }
+        
+        var record         = data.data;
+        record.id_category = '';
+        record.slug        = '';
+        
+        var $form  = $('#category_form');
+        
+        reset_category_form();
+        fill_category_form($form, record);
+        $.unblockUI();
+        show_category_form();
+        update_category_selector(record.parent_category);
+    });
+}
+
+/**
+ * 
+ * @param {jQuery} $form
+ * @param {object} record
+ */
+function fill_category_form($form, record)
+{
+    $form.find('input[name="id_category"]').val( record.id_category );
+    $form.find('input[name="title"]').val( record.title );
+    $form.find('input[name="slug"]').val( record.slug ).data('modified', true);
+    $form.find('textarea[name="description"]').val( record.description );
+    $form.find('input[name="visibility"][value="' +  record.visibility + '"]').click();
+    $form.find('input[name="min_level"][value="' +  record.min_level + '"]').closest('label').click();
+}
+
+function update_category_selector(preselected_id)
+{
+    if( typeof preselected_id == 'undefined' ) preselected_id = '';
+    
     var $container = $('#parent_category_selector_container');
     $container.block(blockUI_smallest_params);
     
@@ -58,17 +125,48 @@ function update_category_selector()
         
         var $select = $container.find('select');
         $select.find('option:not(:first)').remove();
-        
-        for(var key in data.data)
-            $select.append('<option value="' + key + '">' + data.data[key] + '</option>');
+    
+        var selected;
+        for( var key in data.data )
+        {
+            selected = key == preselected_id ? 'selected' : '';
+            $select.append('<option ' + selected + ' value="' + key + '">' + data.data[key] + '</option>');
+        }
         
         $container.unblock();
     });
 }
 
+function delete_category(id_category)
+{
+    var message = $('#category_messages').find('.delete_confirmation').text();
+    
+    if( ! confirm(message) ) return;
+    
+    var url = $_ROOT_URL + '/categories/scripts/delete.php';
+    var params = {
+        'id_category': id_category,
+        'wasuuup':     parseInt(Math.random() * 1000000000000000)
+    };
+    
+    $.blockUI(blockUI_smallest_params);
+    $.get(url, params, function(response)
+    {
+        if( response != 'OK' )
+        {
+            alert(response);
+            $.unblockUI();
+            
+            return;
+        }
+    
+        $.unblockUI();
+        $('#refresh_category_browser').click();
+    });
+}
+
 function reset_category_form()
 {
-    // Todo: implement reset_category_addition_form() function
     var $form = $('#category_form');
     $form[0].reset();
     $form.find('input[name="slug"]').data('modified', false);

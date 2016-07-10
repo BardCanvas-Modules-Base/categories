@@ -9,11 +9,11 @@
  * @var string $_ROOT_URL
  */
 
-use hng2_modules\categories\category_repository;
+use hng2_modules\categories\categories_repository;
 use hng2_tools\record_browser;
 
 $browser    = new record_browser("{$config->website_key}_{$current_module->name}");
-$repository = new category_repository();
+$repository = new categories_repository();
 
 /**
  * @var int    $offset
@@ -139,7 +139,7 @@ $tree    = $repository->get_slug_paths();
 <? endif;  ?>
 
 <div class="table_wrapper">
-    <table class="nav_table evened">
+    <table id="categories_browser_table" class="nav_table evened">
         
         <thead>
         <tr>
@@ -166,30 +166,37 @@ $tree    = $repository->get_slug_paths();
         <? foreach( $records as $row ): ?>
             <tr data-record-id="<?= $row->id_category ?>">
                 <td>
-                    <div><i><?= $tree[$row->id_category] ?></i></div>
+                    <?
+                    $path = $tree[$row->id_category];
+                    $parts = explode("/", $path);
+                    array_pop($parts);
+                    if( count($parts) == 1 ) echo "―";
+                    else                     echo implode("<span class='fa fa-angle-right fa-fw'></span>", $parts);
+                    ?>
+                </td>
+                <td>
                     <div class="principal_data"><?= $row->title ?></div>
+                    
                     <div class="actions">
-                        <span class="action pseudo_link disabled">
+                        <span class="action pseudo_link" onclick="edit_category('<?= $row->id_category ?>')">
                             <span class="fa fa-pencil"></span>
-                            <?= $current_module->language->form->actions->edit ?>
+                            <?= $current_module->language->record_nav->actions->edit ?>
                         </span>
-                        <? if($row->id_category != "uncategorized"): ?>
-                            <span class="action pseudo_link disabled">
+                        <span class="action pseudo_link" onclick="copy_category('<?= $row->id_category ?>')">
+                            <span class="fa fa-copy"></span>
+                            <?= $current_module->language->record_nav->actions->copy ?>
+                        </span>
+                        <? if($row->id_category != "default"): ?>
+                            <span class="action pseudo_link" onclick="delete_category('<?= $row->id_category ?>')">
                                 <span class="fa fa-trash"></span>
-                                <?= $current_module->language->form->actions->delete ?>
+                                <?= $current_module->language->record_nav->actions->delete ?>
                             </span>
                         <? endif; ?>
                     </div>
                 </td>
-                <td>
-                    <?= $row->description ?>
-                </td>
-                <td>
-                    <?= $row->visibility ?>
-                </td>
-                <td>
-                    <?= $row->min_level ?>
-                </td>
+                <td><?= $row->description ?></td>
+                <td><?= $row->visibility ?></td>
+                <td><?= $row->min_level ?></td>
             </tr>
         <? endforeach; ?>
         </tbody>

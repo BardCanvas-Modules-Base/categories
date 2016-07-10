@@ -3,7 +3,7 @@ namespace hng2_modules\categories;
 
 use hng2_base\repository\abstract_repository;
 
-class category_repository extends abstract_repository
+class categories_repository extends abstract_repository
 {
     protected $row_class       = "hng2_modules\\categories\\category_record";
     protected $table_name      = "categories";
@@ -184,5 +184,27 @@ class category_repository extends abstract_repository
         }
         
         return $branch;
+    }
+    
+    /**
+     * @param $key
+     *
+     * @return int
+     */
+    public function delete($key)
+    {
+        $deletions = 0;
+        
+        $children = $this->find(array("parent_category" => $key), 0, 0, "");
+        if( count($children) == 0 )
+        {
+            //TODO: Inject moving of items to default category
+            
+            return parent::delete($key);
+        }
+        
+        foreach($children as $child) $deletions += $this->delete($child->id_category);
+        
+        return $deletions;
     }
 }

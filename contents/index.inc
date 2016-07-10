@@ -48,3 +48,7 @@
     
     <? include __DIR__ . "/form.inc"; ?>
 </div>
+
+<div id="category_messages" style="display: none">
+    <div class="delete_confirmation"><?= unindent($current_module->language->messages->delete_confirmation) ?></div>
+</div>

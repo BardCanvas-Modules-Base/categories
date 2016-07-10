@@ -54,11 +54,11 @@ if( $module_install_action == "install" )
     
     $database->exec("
         insert ignore into categories set
-          id_category     = 'uncategorized',
+          id_category     = 'default',
           parent_category = '',
-          slug            = 'uncategorized',
-          title           = 'Uncategorized',
-          description     = 'Uncategorized items',
+          slug            = 'default',
+          title           = 'Default category',
+          description     = 'Category used for uncategorized items',
           visibility      = 'public',
           min_level       = '0'
     ");

@@ -21,6 +21,9 @@
     <record_nav>
         <placeholder>Search by id, slug, title or description</placeholder>
         <columns>
+            <path>
+                <caption>Parent</caption>
+            </path>
             <title>
                 <caption>Category</caption>
                 <order_asc  id="3">Order by category title ascending</order_asc>
@@ -40,6 +43,11 @@
                 <order_desc id="6">Order by required level + category title descending</order_desc>
             </min_level>
         </columns>
+        <actions>
+            <edit>Edit</edit>
+            <delete>Delete</delete>
+            <copy>Copy</copy>
+        </actions>
     </record_nav>
     
     <form>
@@ -105,14 +113,11 @@
                 <none>None</none>
             </parent_category>
         </fields>
-        <actions>
-            <edit>Edit</edit>
-            <delete>Delete</delete>
-        </actions>
     </form>
     
     <messages>
         <missing>
+            <id>Category id missing</id>
             <title>Please specify a title for the category</title>
             <slug>Please specify a slug for the category</slug>
             <visibility>Please specify the visibility for the category.</visibility>
@@ -124,6 +129,19 @@
             <slug>The slug you specified contains invalid characters. Please use only lowercased letters, numbers, hyphens and underscores.</slug>
         </invalid>
         <slug_already_used>The slug you specified is already used. Please specify another.</slug_already_used>
+        <category_not_found>The category you specified wasn't found.</category_not_found>
+        <delete_confirmation><![CDATA[
+            Important: all items tied to this category or its children categories
+            will be taken back to the "Uncategorized" category.
+            This may take some time, and once started it can't be undone.
+             
+            Do you want to continue?
+        ]]></delete_confirmation>
+        <cannot_delete_default>The 'default' category cannot be deleted.</cannot_delete_default>
+        <category_deleted><![CDATA[
+            Category {$name} successfully deleted. {$children} subcategories deleted.
+            {$items} items moved to "default" category.
+        ]]></category_deleted>
     </messages>
     
 </language>

@@ -8,7 +8,7 @@
  */
 
 use hng2_modules\categories\category_record;
-use hng2_modules\categories\category_repository;
+use hng2_modules\categories\categories_repository;
 
 $_ROOT_URL = "../..";
 include "{$_ROOT_URL}/config.php";
@@ -16,7 +16,7 @@ include "{$_ROOT_URL}/includes/bootstrap.inc";
 if( ! $account->_is_admin ) throw_fake_404();
 session_start();
 
-$repository = new category_repository();
+$repository = new categories_repository();
 
 if( empty($_POST["title"]) )       die($current_module->language->messages->missing->title);
 if( empty($_POST["slug"]) )        die($current_module->language->messages->missing->slug);
@@ -48,6 +48,8 @@ if( $count > 0 )
 
 $category = new category_record();
 $category->set_from_post();
+if( $category->visibility != "level_based" ) $category->min_level = 0;
+
 if( empty($_POST["id_category"]) ) $category->set_new_id();
 $repository->save($category);
 echo "OK";
