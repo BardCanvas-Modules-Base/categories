@@ -12,9 +12,8 @@
 
 use hng2_modules\categories\categories_repository;
 
-$_ROOT_URL = "../..";
-include "{$_ROOT_URL}/config.php";
-include "{$_ROOT_URL}/includes/bootstrap.inc";
+include "../../config.php";
+include "../../includes/bootstrap.inc";
 if( ! $account->_is_admin ) throw_fake_401();
 
 if( empty($_GET["id_category"]) ) die($current_module->language->messages->missing->id);

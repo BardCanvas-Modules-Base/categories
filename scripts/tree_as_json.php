@@ -9,9 +9,8 @@
 
 use hng2_modules\categories\categories_repository;
 
-$_ROOT_URL = "../..";
-include "{$_ROOT_URL}/config.php";
-include "{$_ROOT_URL}/includes/bootstrap.inc";
+include "../../config.php";
+include "../../includes/bootstrap.inc";
 session_start();
 
 header("Content-Type: application/json; charset=utf-8");

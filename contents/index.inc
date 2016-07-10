@@ -9,10 +9,10 @@
 ?>
 
 <!-- Expandible Text Area -->
-<script type="text/javascript" src="<?=$_ROOT_URL?>/lib/jquery.exptextarea.js"></script>
+<script type="text/javascript" src="<?=$config->full_root_path?>/lib/jquery.exptextarea.js"></script>
 <script type="text/javascript"> $(document).ready(function() { $('.expandible_textarea').expandingTextArea(); }); </script>
 
-<script type="text/javascript" src="<?= $_ROOT_URL ?>/categories/media/functions~v<?=$config->scripts_version?>.js"></script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/categories/media/functions~v<?=$config->scripts_version?>.js"></script>
 
 <div id="main_workarea">
     

@@ -15,7 +15,7 @@ use hng2_base\module;
 <div id="category_form_target" style="display: none;"></div>
 
 <form name="category_form" id="category_form" method="post"
-      action="<?= $_ROOT_URL ?>/categories/scripts/save.php">
+      action="<?= $config->full_root_path ?>/categories/scripts/save.php">
     
     <input type="hidden" name="id_category" value="">
     

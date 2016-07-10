@@ -29,7 +29,7 @@ function prepare_category_addition()
 
 function edit_category(id_category)
 {
-    var url    = $_ROOT_URL + '/categories/scripts/get_as_json.php';
+    var url    = $_FULL_ROOT_PATH + '/categories/scripts/get_as_json.php';
     var params = {
         'id_category': id_category,
         'wasuuup'    : parseInt(Math.random() * 1000000000000000)
@@ -45,7 +45,7 @@ function edit_category(id_category)
             
             return;
         }
-    
+        
         var record = data.data;
         var $form  = $('#category_form');
         
@@ -59,7 +59,7 @@ function edit_category(id_category)
 
 function copy_category(id_category)
 {
-    var url    = $_ROOT_URL + '/categories/scripts/get_as_json.php';
+    var url    = $_FULL_ROOT_PATH + '/categories/scripts/get_as_json.php';
     var params = {
         'id_category': id_category,
         'wasuuup'    : parseInt(Math.random() * 1000000000000000)
@@ -112,7 +112,7 @@ function update_category_selector(preselected_id)
     var $container = $('#parent_category_selector_container');
     $container.block(blockUI_smallest_params);
     
-    var url = $_ROOT_URL + '/categories/scripts/tree_as_json.php?wasuuup=' + parseInt(Math.random() * 1000000000000000);
+    var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php?wasuuup=' + parseInt(Math.random() * 1000000000000000);
     $.getJSON(url, function(data)
     {
         if( data.message != 'OK' )
@@ -143,7 +143,7 @@ function delete_category(id_category)
     
     if( ! confirm(message) ) return;
     
-    var url = $_ROOT_URL + '/categories/scripts/delete.php';
+    var url = $_FULL_ROOT_PATH + '/categories/scripts/delete.php';
     var params = {
         'id_category': id_category,
         'wasuuup':     parseInt(Math.random() * 1000000000000000)

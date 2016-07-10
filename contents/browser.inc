@@ -5,8 +5,6 @@
  * @package    BardCanvas
  * @subpackage categories
  * @author     Alejandro Caballero - lava.caballero@gmail.com
- *             
- * @var string $_ROOT_URL
  */
 
 use hng2_modules\categories\categories_repository;
@@ -147,13 +145,13 @@ $tree    = $repository->get_slug_paths();
                 <th align="<?= $this_cell->xalign ?>" <? if( $this_cell->xnowrap == true ) echo "nowrap "; ?>
                     <? if( ! empty($this_cell->xwidth) ) echo "width='$this_cell->xwidth' "; ?> class="<?= $this_cell->xclass ?>"><?
                     if( $this_cell->sort_asc->enabled == true ) echo "<img
-                    src='{$_ROOT_URL}/media/icons/order_asc" . ($order == $this_cell->sort_asc->order ? "_this" : "") . ".gif' 
+                    src='{$config->full_root_path}/media/icons/order_asc" . ($order == $this_cell->sort_asc->order ? "_this" : "") . ".gif' 
                     align='absmiddle' width='7' height='7'  style='cursor: pointer;'
                     alt='{$this_cell->sort_asc->alt}' title='{$this_cell->sort_asc->alt}'
                     onclick=\"document.filter_form.order.value='{$this_cell->sort_asc->order}'; document.filter_form.submit();\">&nbsp;";
                     ?><?= $this_cell->content ?><?
                     if( $this_cell->sort_desc->enabled == true ) echo "&nbsp;<img
-                    src='{$_ROOT_URL}/media/icons/order_desc" . ($order == $this_cell->sort_desc->order ? "_this" : "") . ".gif' 
+                    src='{$config->full_root_path}/media/icons/order_desc" . ($order == $this_cell->sort_desc->order ? "_this" : "") . ".gif' 
                     align='absmiddle' width='7' height='7'  style='cursor: pointer;'
                     alt='{$this_cell->sort_desc->alt}' title='{$this_cell->sort_desc->alt}'
                     onclick=\"document.filter_form.order.value='{$this_cell->sort_desc->order}'; document.filter_form.submit();\">";
