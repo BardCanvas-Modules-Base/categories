@@ -90,35 +90,45 @@ class categories_repository extends abstract_repository
             );
     }
     
-    public function get_as_tree_for_select($where = array(), $order = "title asc")
+    public function get_as_tree_for_select($where = array(), $order = "title asc", $with_description = false)
     {
         $records = $this->find($where, 0, 0, $order);
         if( empty($records) ) return array();
         
         $tree   = $this->build_tree($records, "", "");
-        $return = $this->format_tree_for_selector($tree, "");
+        $return = $this->format_tree_for_selector($tree, "", $with_description);
         
         return $return;
     }
     
     /**
      * Builds the options for a select out of a tree.
-     * 
+     * Watch out: no break spaces used with the bullet below!
+     *
      * @param category_record[] $elements
-     * 
+     * @param string            $tree_prefix
+     * @param bool              $with_description
+     *
      * @return array [id:title, id:title, ...]
      */
-    private function format_tree_for_selector(array $elements, $tree_prefix)
+    private function format_tree_for_selector(array $elements, $tree_prefix, $with_description = false, $indent_level = 0)
     {
         $return = array();
         
         foreach($elements as $element)
         {
-            $return[$element->id_category] = $tree_prefix . "• " . $element->title;
+            $bullet = $indent_level == 0 ? "" : " • ";
+            $element_title = $tree_prefix . $bullet . $element->title;    
+            if($with_description && ! empty($element->description))
+                $element_title .= ": " . $element->description;
+            $return[$element->id_category] = $element_title;
             if( $element->children )
             {
-                # Watch out: no break spaces used with the bullet below!
-                $element_children = $this->format_tree_for_selector($element->children, $tree_prefix . "  ");
+                $element_children = $this->format_tree_for_selector(
+                    $element->children,
+                    str_repeat("   ", $indent_level),
+                    $with_description, $indent_level + 1
+                );
                 $return = array_merge($return, $element_children);
             }
         }

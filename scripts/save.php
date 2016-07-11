@@ -14,8 +14,6 @@ include "../../config.php";
 include "../../includes/bootstrap.inc";
 if( ! $account->_is_admin ) throw_fake_404();
 
-$repository = new categories_repository();
-
 if( empty($_POST["title"]) )       die($current_module->language->messages->missing->title);
 if( empty($_POST["slug"]) )        die($current_module->language->messages->missing->slug);
 if( empty($_POST["visibility"]) )  die($current_module->language->messages->missing->visibility);
@@ -30,6 +28,8 @@ $_POST["min_level"] = (int) $_POST["min_level"];
 
 if( $_POST["visibility"] == "level_based" && $_POST["min_level"] < 0 && $_POST["min_level"] > 255 )
     die($current_module->language->messages->invalid->min_level);
+
+$repository = new categories_repository();
 
 if( ! empty($_POST["parent_category"]) )
 {
