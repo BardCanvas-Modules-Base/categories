@@ -18,10 +18,10 @@ function paginate(value)
 
 function prepare_category_addition()
 {
-    $('#form_workarea')
-        .find('.for_edition').hide()
-        .find('.for_addition').show()
-    ;
+    var $workarea = $('#form_workarea');
+    $workarea.find('.for_edition').hide();
+    $workarea.find('.for_addition').show();
+    
     reset_category_form();
     show_category_form();
     update_category_selector();
@@ -29,6 +29,10 @@ function prepare_category_addition()
 
 function edit_category(id_category)
 {
+    var $workarea = $('#form_workarea');
+    $workarea.find('.for_edition').show();
+    $workarea.find('.for_addition').hide();
+    
     var url    = $_FULL_ROOT_PATH + '/categories/scripts/get_as_json.php';
     var params = {
         'id_category': id_category,
@@ -59,6 +63,10 @@ function edit_category(id_category)
 
 function copy_category(id_category)
 {
+    var $workarea = $('#form_workarea');
+    $workarea.find('.for_edition').hide();
+    $workarea.find('.for_addition').show();
+    
     var url    = $_FULL_ROOT_PATH + '/categories/scripts/get_as_json.php';
     var params = {
         'id_category': id_category,
@@ -112,7 +120,9 @@ function update_category_selector(preselected_id)
     var $container = $('#parent_category_selector_container');
     $container.block(blockUI_smallest_params);
     
-    var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php?wasuuup=' + parseInt(Math.random() * 1000000000000000);
+    var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php'
+            + '?exclude_default=true'
+            + '&wasuuup=' + parseInt(Math.random() * 1000000000000000);
     $.getJSON(url, function(data)
     {
         if( data.message != 'OK' )
@@ -149,18 +159,20 @@ function delete_category(id_category)
         'wasuuup':     parseInt(Math.random() * 1000000000000000)
     };
     
-    $.blockUI(blockUI_smallest_params);
+    var $row = $('#categories_browser_table').find('tr[data-record-id="' + id_category + '"]');
+    
+    $row.block(blockUI_smallest_params);
     $.get(url, params, function(response)
     {
         if( response != 'OK' )
         {
             alert(response);
-            $.unblockUI();
+            $row.unblock();
             
             return;
         }
     
-        $.unblockUI();
+        $row.unblock();
         $('#refresh_category_browser').click();
     });
 }
