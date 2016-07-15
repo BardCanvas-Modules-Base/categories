@@ -7,7 +7,7 @@
 
     <admin>
         <menu_items>
-            <admin_menu_caption>Categories</admin_menu_caption>
+            <admin_menu_caption icon="fa-folder">Categories</admin_menu_caption>
         </menu_items>
     </admin>
     
