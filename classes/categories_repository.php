@@ -217,4 +217,14 @@ class categories_repository extends abstract_repository
         
         return $deletions;
     }
+    
+    /**
+     * @return category_record[]
+     */
+    public function get_for_listings()
+    {
+        // TODO: Add filtering for category listings
+        
+        return $this->find(array(), 0, 0, "title");
+    }
 }
