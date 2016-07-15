@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <language>
     
+    <display_name>Categories subsystem</display_name>
     <description>
         Category tree maintenance
     </description>
