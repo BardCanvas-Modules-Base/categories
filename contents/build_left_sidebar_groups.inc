@@ -14,6 +14,7 @@ $listing    = $repository->get_for_listings();
 
 $lines = array();
 $lines[] = "<div class='group'>";
+$lines[] = "<div class='title'>{$this_module->language->left_sidebar->group_caption}</div>";
 
 foreach($listing as $row)
     $lines[] = "<a class='item' href='{$config->full_root_url}/category/{$row->slug}/'>{$row->title}</a>";

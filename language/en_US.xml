@@ -116,6 +116,10 @@
         </fields>
     </form>
     
+    <left_sidebar>
+        <group_caption>Categories</group_caption>
+    </left_sidebar>
+    
     <messages>
         <missing>
             <id>Category id missing</id>
