@@ -21,7 +21,12 @@ class categories_repository extends abstract_repository
      */
     public function get($id)
     {
-        return parent::get($id);
+        $where = array("{$this->key_column_name} = '$id' or slug = '$id'");
+        $res   = $this->find($where, 1, 0, "");
+        
+        if( count($res) == 0 ) return null;
+        
+        return current($res);
     }
     
     /**
