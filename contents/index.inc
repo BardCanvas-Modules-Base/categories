@@ -16,6 +16,24 @@
 
 <div id="main_workarea">
     
+    <script type="text/javascript">
+        function reset_filter()
+        {
+            var $form = $('#filter_form');
+            $form.find('input[name="search_for"]').val('');
+            $form.find('select[name="limit"] options:first').prop('selected', true);
+            $form.find('input[name="offset"]').val('0');
+            $form.find('input[name="order"]').val('3');
+        }
+        
+        function paginate(value)
+        {
+            var $form = $('#filter_form');
+            $form.find('input[name="offset"]').val(value);
+            $form.submit();
+        }
+    </script>
+    
     <? $url = "browser.php?wasuuup=" . md5(mt_rand(1, 65535)); ?>
     <div id="categories_browser" class="ajax_record_browser" data-src="<?= $url ?>">
         <div class="framed_content state_highlight" style="padding: 100px 0; text-align: center;">

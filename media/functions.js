@@ -1,21 +1,4 @@
 
-function reset_filter()
-{
-    var $form = $('#filter_form');
-    $form.find('input[name="search_for"]').val('');
-    $form.find('select[name="limit"] options:first').prop('selected', true);
-    $form.find('input[name="offset"]').val('0');
-    $form.find('input[name="order"]').val('3');
-}
-
-//noinspection JSUnusedGlobalSymbols
-function paginate(value)
-{
-    var $form = $('#filter_form');
-    $form.find('input[name="offset"]').val(value);
-    $form.submit();
-}
-
 function prepare_category_addition()
 {
     var $workarea = $('#form_workarea');
@@ -181,6 +164,7 @@ function reset_category_form()
 {
     var $form = $('#category_form');
     $form[0].reset();
+    $form.find('input[name="id_category"]').val('');
     $form.find('input[name="slug"]').data('modified', false);
 }
 
