@@ -232,4 +232,15 @@ class categories_repository extends abstract_repository
         
         return $this->find(array(), 0, 0, "title");
     }
+    
+    public function get_id_by_slug($slug)
+    {
+        global $database;
+        
+        $res = $database->query("select id_category from {$this->table_name} where slug = '$slug'");
+        if( $database->num_rows($res) == 0 ) return "";
+        
+        $row = $database->fetch_object($res);
+        return $row->id_category;
+    }
 }
