@@ -2,13 +2,14 @@
 <language>
     
     <display_name>Categories subsystem</display_name>
+    <icon>fa-folder</icon>
     <description>
         Category tree maintenance
     </description>
 
     <admin>
         <menu_items>
-            <admin_menu_caption icon="fa-folder">Categories</admin_menu_caption>
+            <admin_menu_caption>Categories</admin_menu_caption>
         </menu_items>
     </admin>
     
