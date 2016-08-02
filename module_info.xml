@@ -24,9 +24,9 @@
         <bootstrap></bootstrap>
     </php_includes>
     -->
-
+    
     <template_includes>
-        <pre_rendering>build_left_sidebar_groups.inc</pre_rendering>
+        <!--<pre_rendering></pre_rendering>-->
         <!--<html_head></html_head>-->
         <!--<pre_header></pre_header>-->
         <!--<header_top></header_top>-->
@@ -43,4 +43,8 @@
         <!--<post_rendering></post_rendering>-->
     </template_includes>
 
+    <widgets>
+        <widget for="left_sidebar" id="listing" type="php" is_clonable="false" file="left_sidebar_listing.inc" />
+    </widgets>
+    
 </module>
