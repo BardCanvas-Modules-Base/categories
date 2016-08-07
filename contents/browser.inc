@@ -194,6 +194,7 @@ $tree    = $repository->get_slug_paths();
                         <? endif; ?>
                     </div>
                 </td>
+                <td><?= $row->slug ?></td>
                 <td><?= $row->description ?></td>
                 <td><?= $row->visibility ?></td>
                 <td><?= $row->min_level ?></td>

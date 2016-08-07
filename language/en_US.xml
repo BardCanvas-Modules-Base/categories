@@ -31,6 +31,9 @@
                 <order_asc  id="3">Order by category title ascending</order_asc>
                 <order_desc id="4">Order by category title descending</order_desc>
             </title>
+            <slug>
+                <caption>Slug</caption>
+            </slug>
             <description>
                 <caption>Description</caption>
             </description>
