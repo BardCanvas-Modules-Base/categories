@@ -15,13 +15,13 @@ class categories_repository extends abstract_repository
     );
     
     /**
-     * @param $id
+     * @param $id_or_slug
      *
      * @return category_record|null
      */
-    public function get($id)
+    public function get($id_or_slug)
     {
-        $where = array("{$this->key_column_name} = '$id' or slug = '$id'");
+        $where = array("{$this->key_column_name} = '$id_or_slug' or slug = '$id_or_slug'");
         $res   = $this->find($where, 1, 0, "");
         
         if( count($res) == 0 ) return null;
