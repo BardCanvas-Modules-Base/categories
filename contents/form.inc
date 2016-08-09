@@ -142,7 +142,7 @@ use hng2_base\module;
     
     <p align="center">
         <button type="submit" class="big_form_submit_button">
-            <span class="fa fa-check"></span>
+            <span class="fa fa-save"></span>
             <?= $language->save ?>
         </button>
         <button type="reset"  class="big_form_submit_button" onclick="hide_category_form()">
