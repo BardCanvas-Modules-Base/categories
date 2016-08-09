@@ -1,7 +1,7 @@
 <?php
 namespace hng2_modules\categories;
 
-use hng2_base\repository\abstract_record;
+use hng2_repository\abstract_record;
 
 class category_record extends abstract_record
 {

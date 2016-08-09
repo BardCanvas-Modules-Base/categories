@@ -1,7 +1,7 @@
 <?php
 namespace hng2_modules\categories;
 
-use hng2_base\repository\abstract_repository;
+use hng2_repository\abstract_repository;
 
 class categories_repository extends abstract_repository
 {
