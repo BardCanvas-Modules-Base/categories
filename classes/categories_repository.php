@@ -21,10 +21,14 @@ class categories_repository extends abstract_repository
      */
     public function get($id_or_slug)
     {
+        if( self::$cache->exists($id_or_slug) ) return self::$cache->get($id_or_slug);
+        
         $where = array("{$this->key_column_name} = '$id_or_slug' or slug = '$id_or_slug'");
         $res   = $this->find($where, 1, 0, "");
         
         if( count($res) == 0 ) return null;
+        
+        self::$cache->set($id_or_slug, $res);
         
         return current($res);
     }
@@ -215,10 +219,14 @@ class categories_repository extends abstract_repository
         {
             //TODO: Inject moving of items to default category
             
+            self::$cache->delete($key);
+            
             return parent::delete($key);
         }
         
         foreach($children as $child) $deletions += $this->delete($child->id_category);
+        
+        self::$cache->delete($key);
         
         return $deletions;
     }
