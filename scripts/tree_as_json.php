@@ -26,7 +26,7 @@ $with_description = $_GET["with_description"] == "true";
 
 $tree_filter = $account->_is_admin == false ? array() : array(
     $_GET["exclude_default"] == "true" ? "id_category <> '0000000000000'" : "true",
-    "( visibility = 'public' or visibility = 'users' or (visibility  = 'level_based' and '{$account->level}' >= min_level) )"
+    # "( visibility = 'public' or visibility = 'users' or (visibility  = 'level_based' and '{$account->level}' >= min_level) )"
 );
 
 $data = $repository->get_as_tree_for_select($tree_filter, "", $with_description);

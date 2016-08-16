@@ -112,11 +112,30 @@ class categories_repository extends abstract_repository
     
     public function get_as_tree_for_select($where = array(), $order = "title asc", $with_description = false)
     {
+        global $account, $mem_cache;
+    
+        if( ! $account->_exists )
+        {
+            $where[] = "visibility = 'public'";
+            $cache_key = "{$this->table_name}:tree_for_select-public_v2";
+        }
+        else
+        {
+            $where[] = "( visibility = 'public' or visibility = 'users' or 
+                          (visibility = 'level_based' and '{$account->level}' >= min_level) 
+                        )";
+            $cache_key = "{$this->table_name}:tree_for_select-bylevel:{$account->level}_v2";
+        }
+    
+        $res = $mem_cache->get($cache_key);
+        if( ! empty($res) ) return $res;
+        
         $records = $this->find($where, 0, 0, $order);
         if( empty($records) ) return array();
         
         $tree   = $this->build_tree($records, "", "");
         $return = $this->format_tree_for_selector($tree, "", $with_description);
+        $mem_cache->set($cache_key, $return, 0, 60*60*24);
         
         return $return;
     }
