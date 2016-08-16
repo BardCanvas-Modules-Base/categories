@@ -258,14 +258,14 @@ class categories_repository extends abstract_repository
         if( ! $account->_exists )
         {
             $where[] = "visibility = 'public'";
-            $cache_key = "{$this->table_name}:public";
+            $cache_key = "{$this->table_name}:listing-public";
         }
         else
         {
             $where[] = "( visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
-            $cache_key = "{$this->table_name}:level:{$account->level}";
+            $cache_key = "{$this->table_name}:listing-bylevel:{$account->level}";
         }
         
         $res = $mem_cache->get($cache_key);
