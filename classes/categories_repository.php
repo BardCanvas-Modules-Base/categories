@@ -245,9 +245,18 @@ class categories_repository extends abstract_repository
      */
     public function get_for_listings()
     {
-        // TODO: Add filtering for category listings
+        global $account;
         
-        return $this->find(array(), 0, 0, "title");
+        $where = array();
+        
+        if( ! $account->_exists )
+            $where[] = "visibility = 'public'";
+        else
+            $where[] = "( visibility = 'public' or visibility = 'users' or 
+                          (visibility = 'level_based' and '{$account->level}' >= min_level) 
+                        )";
+        
+        return $this->find($where, 0, 0, "title");
     }
     
     public function get_id_by_slug($slug)

@@ -33,6 +33,7 @@ if( empty($listing) ) return "";
 foreach($listing as $row)
 {
     $added_class = $template->get("current_category_slug") == $row->slug ? "selected" : "";
+    $added_class .= $row->visibility == "public" ? "" : " important";
     $lines[] = "<a class='item $added_class' href='{$config->full_root_url}/category/{$row->slug}/'>{$row->title}</a>";
 }
 
