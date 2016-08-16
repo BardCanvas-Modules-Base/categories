@@ -14,6 +14,10 @@ class categories_repository extends abstract_repository
         "( select title from categories c2 where c2.id_category = categories.parent_category ) as parent_category_title",
     );
     
+    public function __construct()
+    {
+    }
+    
     /**
      * @param $id_or_slug
      *
@@ -21,14 +25,17 @@ class categories_repository extends abstract_repository
      */
     public function get($id_or_slug)
     {
-        if( self::$cache->exists($id_or_slug) ) return self::$cache->get($id_or_slug);
+        global $object_cache;
+        
+        if( $object_cache->exists($this->table_name, $id_or_slug) )
+            return $object_cache->get($this->table_name, $id_or_slug);
         
         $where = array("{$this->key_column_name} = '$id_or_slug' or slug = '$id_or_slug'");
         $res   = $this->find($where, 1, 0, "");
         
         if( count($res) == 0 ) return null;
         
-        self::$cache->set($id_or_slug, $res);
+        $object_cache->set($this->table_name, $id_or_slug, $res);
         
         return current($res);
     }
@@ -212,21 +219,23 @@ class categories_repository extends abstract_repository
      */
     public function delete($key)
     {
+        global $object_cache;
+        
         $deletions = 0;
         
         $children = $this->find(array("parent_category" => $key), 0, 0, "");
         if( count($children) == 0 )
         {
             //TODO: Inject moving of items to default category
-            
-            self::$cache->delete($key);
+    
+            $object_cache->delete($this->table_name, $key);
             
             return parent::delete($key);
         }
         
         foreach($children as $child) $deletions += $this->delete($child->id_category);
         
-        self::$cache->delete($key);
+        $object_cache->delete($this->table_name, $key);
         
         return $deletions;
     }
