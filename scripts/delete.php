@@ -26,6 +26,7 @@ if( $count == 0 ) die($current_module->language->messages->category_not_found);
 if( $_GET["id_category"] == "0000000000000" ) die($current_module->language->messages->cannot_delete_default);;
 
 $deleted = $repository->delete($_GET["id_category"]);
+$repository->purge_caches();
 
 send_notification($account->id_account, "success", replace_escaped_vars(
     $current_module->language->messages->category_deleted,

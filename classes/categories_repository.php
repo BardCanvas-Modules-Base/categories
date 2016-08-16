@@ -60,12 +60,12 @@ class categories_repository extends abstract_repository
      */
     public function save($record)
     {
-        global $database;
+        global $database, $mem_cache;
         
         $this->validate_record($record);
         $obj = $record->get_for_database_insertion();
         
-        return $database->exec("
+        $res = $database->exec("
             insert into {$this->table_name}
             (
                 id_category     ,
@@ -91,6 +91,10 @@ class categories_repository extends abstract_repository
                 visibility      = '{$obj->visibility}',
                 min_level       = '{$obj->min_level}'
         ");
+        
+        if($res) $mem_cache->purge_by_prefix("{$this->table_name}:");
+        
+        return $res;
     }
     
     /**
@@ -213,6 +217,8 @@ class categories_repository extends abstract_repository
     }
     
     /**
+     * Warning: mem_cache purging shouldn't be included here, but after calling the method!
+     * 
      * @param $key
      *
      * @return int
@@ -227,7 +233,7 @@ class categories_repository extends abstract_repository
         if( count($children) == 0 )
         {
             //TODO: Inject moving of items to default category
-    
+            
             $object_cache->delete($this->table_name, $key);
             
             return parent::delete($key);
@@ -245,18 +251,29 @@ class categories_repository extends abstract_repository
      */
     public function get_for_listings()
     {
-        global $account;
+        global $account, $mem_cache;
         
         $where = array();
         
         if( ! $account->_exists )
+        {
             $where[] = "visibility = 'public'";
+            $cache_key = "{$this->table_name}:public";
+        }
         else
+        {
             $where[] = "( visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
+            $cache_key = "{$this->table_name}:level:{$account->level}";
+        }
         
-        return $this->find($where, 0, 0, "title");
+        $res = $mem_cache->get($cache_key);
+        if( ! empty($res) ) return $res;
+        
+        $records = $this->find($where, 0, 0, "title");
+        $mem_cache->set($cache_key, $records, 0, 60*60*24);
+        return $records;
     }
     
     public function get_id_by_slug($slug)
@@ -268,5 +285,11 @@ class categories_repository extends abstract_repository
         
         $row = $database->fetch_object($res);
         return $row->id_category;
+    }
+    
+    public function purge_caches()
+    {
+        global $mem_cache;
+        $mem_cache->purge_by_prefix("{$this->table_name}:");
     }
 }
