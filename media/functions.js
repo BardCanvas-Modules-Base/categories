@@ -104,8 +104,8 @@ function update_category_selector(preselected_id)
     $container.block(blockUI_smallest_params);
     
     var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php'
-            + '?exclude_default=true'
-            + '&wasuuup=' + parseInt(Math.random() * 1000000000000000);
+            // + '?exclude_default=true'
+            + '?wasuuup=' + parseInt(Math.random() * 1000000000000000);
     $.getJSON(url, function(data)
     {
         if( data.message != 'OK' )
