@@ -14,8 +14,13 @@ class categories_repository extends abstract_repository
         "( select title from categories c2 where c2.id_category = categories.parent_category ) as parent_category_title",
     );
     
+    protected $cache_key_suffix = "";
+    
     public function __construct()
     {
+        global $config;
+        
+        $this->cache_key_suffix = $config->scripts_version;
     }
     
     /**
@@ -113,20 +118,21 @@ class categories_repository extends abstract_repository
     public function get_as_tree_for_select($where = array(), $order = "title asc", $with_description = false)
     {
         global $account, $mem_cache;
-    
+        
         if( ! $account->_exists )
         {
             $where[] = "visibility = 'public'";
-            $cache_key = "{$this->table_name}:tree_for_select-public_v2";
+            $cache_key = "{$this->table_name}:tree_for_select-public_{$this->cache_key_suffix}";
         }
         else
         {
-            $where[] = "( visibility = 'public' or visibility = 'users' or 
+            $where[] = "(
+                          visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
-            $cache_key = "{$this->table_name}:tree_for_select-bylevel:{$account->level}_v2";
+            $cache_key = "{$this->table_name}:tree_for_select-bylevel:{$account->level}_{$this->cache_key_suffix}";
         }
-    
+        
         $res = $mem_cache->get($cache_key);
         if( ! empty($res) ) return $res;
         
@@ -277,14 +283,15 @@ class categories_repository extends abstract_repository
         if( ! $account->_exists )
         {
             $where[] = "visibility = 'public'";
-            $cache_key = "{$this->table_name}:listing-public";
+            $cache_key = "{$this->table_name}:listing-public_{$this->cache_key_suffix}";
         }
         else
         {
-            $where[] = "( visibility = 'public' or visibility = 'users' or 
+            $where[] = "(
+                          visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
-            $cache_key = "{$this->table_name}:listing-bylevel:{$account->level}";
+            $cache_key = "{$this->table_name}:listing-bylevel:{$account->level}_{$this->cache_key_suffix}";
         }
         
         $res = $mem_cache->get($cache_key);
