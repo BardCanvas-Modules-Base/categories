@@ -14,14 +14,7 @@ class categories_repository extends abstract_repository
         "( select title from categories c2 where c2.id_category = categories.parent_category ) as parent_category_title",
     );
     
-    protected $cache_key_suffix = "";
-    
-    public function __construct()
-    {
-        global $config;
-        
-        $this->cache_key_suffix = $config->scripts_version;
-    }
+    protected $cache_key_suffix = "1";
     
     /**
      * @param $id_or_slug
