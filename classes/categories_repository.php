@@ -23,7 +23,13 @@ class categories_repository extends abstract_repository
      */
     public function get($id_or_slug)
     {
-        global $object_cache;
+        global $object_cache, $mem_cache;
+        
+        if( $id_or_slug == "0000000000000" )
+        {
+            $res = $mem_cache->get("categories:default_category");
+            if( ! empty($res) ) return $res;
+        }
         
         if( $object_cache->exists($this->table_name, $id_or_slug) )
             return $object_cache->get($this->table_name, $id_or_slug);
@@ -34,6 +40,7 @@ class categories_repository extends abstract_repository
         if( count($res) == 0 ) return null;
         
         $object_cache->set($this->table_name, $id_or_slug, $res);
+        if( $id_or_slug == "0000000000000" ) $mem_cache->set("categories:default_category", $res, 0, 60*60);
         
         return current($res);
     }
