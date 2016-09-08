@@ -75,8 +75,7 @@
             <description>
                 <caption>Description</caption>
                 <info><![CDATA[
-                    Short description of the category. It will be displayed as needed.
-                    Basic HTML is supported.
+                    Short description of the category. It will be displayed as needed. Text only.
                 ]]></info>
             </description>
             <visibility>
@@ -141,7 +140,7 @@
         <category_not_found>The category you specified wasn't found.</category_not_found>
         <delete_confirmation><![CDATA[
             Important: all items tied to this category or its children categories
-            will be taken back to the "Uncategorized" category.
+            will be taken back to the default category.
             This may take some time, and once started it can't be undone.
              
             Do you want to continue?
