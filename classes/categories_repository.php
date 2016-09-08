@@ -14,7 +14,7 @@ class categories_repository extends abstract_repository
         "( select title from categories c2 where c2.id_category = categories.parent_category ) as parent_category_title",
     );
     
-    protected $cache_key_suffix = "1";
+    protected $cache_key_suffix = "6";
     
     /**
      * @param $id_or_slug
@@ -24,12 +24,9 @@ class categories_repository extends abstract_repository
     public function get($id_or_slug)
     {
         global $object_cache, $mem_cache;
-        
-        if( $id_or_slug == "0000000000000" )
-        {
-            $res = $mem_cache->get("categories:default_category");
-            if( ! empty($res) ) return $res;
-        }
+    
+        $res = $mem_cache->get("categories:{$id_or_slug}~v{$this->cache_key_suffix}");
+        if( is_object($res) ) return $res;
         
         if( $object_cache->exists($this->table_name, $id_or_slug) )
             return $object_cache->get($this->table_name, $id_or_slug);
@@ -39,10 +36,11 @@ class categories_repository extends abstract_repository
         
         if( count($res) == 0 ) return null;
         
-        $object_cache->set($this->table_name, $id_or_slug, $res);
-        if( $id_or_slug == "0000000000000" ) $mem_cache->set("categories:default_category", $res, 0, 60*60);
+        $record = current($res);
+        $object_cache->set($this->table_name, $id_or_slug, $record);
+        $mem_cache->set("categories:{$id_or_slug}~v{$this->cache_key_suffix}", $record, 0, 60*60);
         
-        return current($res);
+        return $record;
     }
     
     /**
@@ -117,31 +115,21 @@ class categories_repository extends abstract_repository
     
     public function get_as_tree_for_select($where = array(), $order = "title asc", $with_description = false)
     {
-        global $account, $mem_cache;
+        global $account;
         
         if( ! $account->_exists )
-        {
             $where[] = "visibility = 'public'";
-            $cache_key = "{$this->table_name}:tree_for_select-public_{$this->cache_key_suffix}";
-        }
         else
-        {
             $where[] = "(
                           visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
-            $cache_key = "{$this->table_name}:tree_for_select-bylevel:{$account->level}_{$this->cache_key_suffix}";
-        }
-        
-        $res = $mem_cache->get($cache_key);
-        if( ! empty($res) ) return $res;
         
         $records = $this->find($where, 0, 0, $order);
         if( empty($records) ) return array();
         
         $tree   = $this->build_tree($records, "", "");
         $return = $this->format_tree_for_selector($tree, "", $with_description);
-        $mem_cache->set($cache_key, $return, 0, 60*60*24);
         
         return $return;
     }
@@ -283,7 +271,7 @@ class categories_repository extends abstract_repository
         if( ! $account->_exists )
         {
             $where[] = "visibility = 'public'";
-            $cache_key = "{$this->table_name}:listing-public_{$this->cache_key_suffix}";
+            $cache_key = "{$this->table_name}:listing-public~v{$this->cache_key_suffix}";
         }
         else
         {
@@ -291,7 +279,7 @@ class categories_repository extends abstract_repository
                           visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
-            $cache_key = "{$this->table_name}:listing-bylevel:{$account->level}_{$this->cache_key_suffix}";
+            $cache_key = "{$this->table_name}:listing-bylevel:{$account->level}~v{$this->cache_key_suffix}";
         }
         
         $res = $mem_cache->get($cache_key);

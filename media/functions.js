@@ -40,7 +40,7 @@ function edit_category(id_category)
         fill_category_form($form, record);
         $.unblockUI();
         show_category_form();
-        update_category_selector(record.parent_category);
+        update_category_selector(record.parent_category, id_category);
     });
 }
 
@@ -96,15 +96,15 @@ function fill_category_form($form, record)
     $form.find('input[name="min_level"][value="' +  record.min_level + '"]').closest('label').click();
 }
 
-function update_category_selector(preselected_id)
+function update_category_selector(preselected_id, editing_record_id)
 {
-    if( typeof preselected_id == 'undefined' ) preselected_id = '';
+    if( typeof preselected_id    == 'undefined' ) preselected_id    = '';
+    if( typeof editing_record_id == 'undefined' ) editing_record_id = '';
     
     var $container = $('#parent_category_selector_container');
     $container.block(blockUI_smallest_params);
     
     var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php'
-            // + '?exclude_default=true'
             + '?wasuuup=' + parseInt(Math.random() * 1000000000000000);
     $.getJSON(url, function(data)
     {
@@ -122,6 +122,8 @@ function update_category_selector(preselected_id)
         var selected;
         for( var key in data.data )
         {
+            if( key == editing_record_id ) continue;
+            
             selected = key == preselected_id ? 'selected' : '';
             $select.append('<option ' + selected + ' value="' + key + '">' + data.data[key] + '</option>');
         }

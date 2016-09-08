@@ -136,6 +136,7 @@
             <parent_category>The parent category can't be found.</parent_category>
             <slug>The slug you specified contains invalid characters. Please use only lowercased letters, numbers, hyphens and underscores.</slug>
         </invalid>
+        <self_parenting_not_allowed>A category can't be parent of itself.</self_parenting_not_allowed>
         <slug_already_used>The slug you specified is already used. Please specify another.</slug_already_used>
         <category_not_found>The category you specified wasn't found.</category_not_found>
         <delete_confirmation><![CDATA[

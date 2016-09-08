@@ -35,6 +35,9 @@ if( ! empty($_POST["parent_category"]) )
 {
     $count = $repository->get_record_count(array("id_category" => $_POST["parent_category"]));
     if( $count == 0 ) die($current_module->language->messages->invalid->parent_category);
+    
+    if( ! empty($_POST["id_category"]) && $_POST["id_category"] == $_POST["parent_category"] )
+        die($current_module->language->messages->self_parenting_not_allowed);
 }
 
 if( ! preg_match('/^[a-z0-9\-_]+$/', $_POST["slug"]) )

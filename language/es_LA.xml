@@ -135,6 +135,7 @@
             <parent_category>La categoría pariente no se ha encontrado.</parent_category>
             <slug>El slug contiene caracteres inválidos. Sólo usar a-z sin acentos, números, guiones y guiones bajos.</slug>
         </invalid>
+        <self_parenting_not_allowed>Una categoría no puede ser pariente de sí misma.</self_parenting_not_allowed>
         <slug_already_used>El slug especificado ya existe. Especifica otro.</slug_already_used>
         <category_not_found>La categoría especificada no existe.</category_not_found>
         <delete_confirmation><![CDATA[

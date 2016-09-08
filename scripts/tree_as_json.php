@@ -25,10 +25,6 @@ $repository       = new categories_repository();
 $with_description = $_GET["with_description"] == "true";
 
 $tree_filter = array();
-if( ! $account->_is_admin )
-    if( $_GET["exclude_default"] == "true" )
-        $tree_filter[] = "id_category <> '0000000000000'";
-
-$data = $repository->get_as_tree_for_select($tree_filter, "", $with_description);
+$data        = $repository->get_as_tree_for_select($tree_filter, "", $with_description);
 
 echo json_encode(array("message" => "OK", "data" => $data));
