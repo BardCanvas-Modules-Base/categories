@@ -24,7 +24,8 @@ if( ! in_array($_POST["visibility"], array("public", "users", "level_based")))
 if( $_POST["visibility"] == "level_based" && ! is_numeric($_POST["min_level"]) )
     die($current_module->language->messages->invalid->min_level);
 
-$_POST["min_level"] = (int) $_POST["min_level"];
+if( ! is_numeric($_POST["min_level"]) )
+    die($current_module->language->messages->invalid->min_level);
 
 if( $_POST["visibility"] == "level_based" && $_POST["min_level"] < 0 && $_POST["min_level"] > 255 )
     die($current_module->language->messages->invalid->min_level);
@@ -44,8 +45,7 @@ if( ! preg_match('/^[a-z0-9\-_]+$/', $_POST["slug"]) )
     die($current_module->language->messages->invalid->slug);
 
 $count = $repository->get_record_count(array("id_category <> '{$_POST["id_category"]}'", "slug" => $_POST["slug"]));
-if( $count > 0 )
-    die($current_module->language->messages->slug_already_used);
+if( $count > 0 ) die($current_module->language->messages->slug_already_used);
 
 $category = new category_record();
 $category->set_from_post();

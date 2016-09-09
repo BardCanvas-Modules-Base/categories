@@ -111,7 +111,8 @@ use hng2_base\module;
                 <?= $option->info ?>
             </div>
             <div class="input buttonized_radios" id="visibility_min_level" style="display: none;">
-                <? foreach($config->user_levels_by_level as $level => $name): ?>
+                <? foreach($config->user_levels_by_level as $level => $name):
+                    if( $level <= 1 ) continue; ?>
                     <label class="framed_content inlined">
                         <input type="radio" name="min_level" value="<?= $level ?>">
                         <?= $name ?> (<?= $level ?>)
