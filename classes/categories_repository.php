@@ -14,8 +14,6 @@ class categories_repository extends abstract_repository
         "( select title from categories c2 where c2.id_category = categories.parent_category ) as parent_category_title",
     );
     
-    protected $cache_key_suffix = "6";
-    
     /**
      * @param $id_or_slug
      *
@@ -25,7 +23,7 @@ class categories_repository extends abstract_repository
     {
         global $object_cache, $mem_cache;
     
-        $res = $mem_cache->get("categories:{$id_or_slug}~v{$this->cache_key_suffix}");
+        $res = $mem_cache->get("categories:{$id_or_slug}");
         if( is_object($res) ) return $res;
         
         if( $object_cache->exists($this->table_name, $id_or_slug) )
@@ -38,7 +36,7 @@ class categories_repository extends abstract_repository
         
         $record = current($res);
         $object_cache->set($this->table_name, $id_or_slug, $record);
-        $mem_cache->set("categories:{$id_or_slug}~v{$this->cache_key_suffix}", $record, 0, 60*60);
+        $mem_cache->set("categories:{$id_or_slug}", $record, 0, 60*60);
         
         return $record;
     }
@@ -271,7 +269,7 @@ class categories_repository extends abstract_repository
         if( ! $account->_exists )
         {
             $where[] = "visibility = 'public'";
-            $cache_key = "{$this->table_name}:listing-public~v{$this->cache_key_suffix}";
+            $cache_key = "{$this->table_name}:listing-public";
         }
         else
         {
@@ -279,7 +277,7 @@ class categories_repository extends abstract_repository
                           visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
-            $cache_key = "{$this->table_name}:listing-bylevel:{$account->level}~v{$this->cache_key_suffix}";
+            $cache_key = "{$this->table_name}:listing-bylevel:{$account->level}";
         }
         
         $res = $mem_cache->get($cache_key);
