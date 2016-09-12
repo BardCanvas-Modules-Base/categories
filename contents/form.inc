@@ -130,7 +130,7 @@ use hng2_base\module;
                   class="fa fa-info-circle" title="<?= $language->toggle_info ?>"></span></span>
         </div>
         <div class="input" id="parent_category_selector_container">
-            <select name="parent_category" class="fixed_font">
+            <select name="parent_category" class="big_monospace_select">
                 <option value=""><?= $current_module->language->form->fields->parent_category->none ?></option>
             </select>
         </div>
