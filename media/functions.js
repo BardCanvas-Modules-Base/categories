@@ -19,7 +19,7 @@ function edit_category(id_category)
     var url    = $_FULL_ROOT_PATH + '/categories/scripts/get_as_json.php';
     var params = {
         'id_category': id_category,
-        'wasuuup'    : parseInt(Math.random() * 1000000000000000)
+        'wasuuup'    : wasuuup()
     };
     
     $.blockUI(blockUI_default_params);
@@ -53,7 +53,7 @@ function copy_category(id_category)
     var url    = $_FULL_ROOT_PATH + '/categories/scripts/get_as_json.php';
     var params = {
         'id_category': id_category,
-        'wasuuup'    : parseInt(Math.random() * 1000000000000000)
+        'wasuuup'    : wasuuup()
     };
     
     $.blockUI(blockUI_default_params);
@@ -105,7 +105,7 @@ function update_category_selector(preselected_id, editing_record_id)
     $container.block(blockUI_smallest_params);
     
     var url = $_FULL_ROOT_PATH + '/categories/scripts/tree_as_json.php'
-            + '?wasuuup=' + parseInt(Math.random() * 1000000000000000);
+            + '?wasuuup=' + wasuuup();
     $.getJSON(url, function(data)
     {
         if( data.message != 'OK' )
@@ -141,7 +141,7 @@ function delete_category(id_category)
     var url = $_FULL_ROOT_PATH + '/categories/scripts/delete.php';
     var params = {
         'id_category': id_category,
-        'wasuuup':     parseInt(Math.random() * 1000000000000000)
+        'wasuuup':     wasuuup()
     };
     
     var $row = $('#categories_browser_table').find('tr[data-record-id="' + id_category + '"]');
