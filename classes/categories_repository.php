@@ -129,6 +129,7 @@ class categories_repository extends abstract_repository
         $tree   = $this->build_tree($records, "", "");
         $return = $this->format_tree_for_selector($tree, "", $with_description);
         
+        asort($return);
         return $return;
     }
     

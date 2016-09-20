@@ -24,7 +24,11 @@ if( ! $account->_exists ) die(json_encode(array("message" => $language->errors->
 $repository       = new categories_repository();
 $with_description = $_GET["with_description"] == "true";
 
-$tree_filter = array();
-$data        = $repository->get_as_tree_for_select($tree_filter, "", $with_description);
+$main_category = $repository->get("0000000000000");
+$tree_filter   = array("id_category <> '0000000000000'");
+$data          = array("0000000000000" => $main_category->title);
+$res           = $repository->get_as_tree_for_select($tree_filter, "title asc", $with_description);
+
+foreach($res as $key => $val) $data[$key] = $val;
 
 echo json_encode(array("message" => "OK", "data" => $data));
