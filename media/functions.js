@@ -182,22 +182,6 @@ function hide_category_form()
     $('#main_workarea').show('fast');
 }
 
-function update_slug()
-{
-    var $form = $('#category_form');
-    if( $form.find('input[name="id_category"]').val() != '' ) return;
-    if( $form.find('input[name="slug"]').data('modified') ) return;
-    
-    var title = $form.find('input[name="title"]');
-    var slug  = title.toLowerCase();
-    
-    slug = slug.replace(/[^a-z0-9\-_]/g, "-");
-    slug = slug.replace(/\-+/g, "-");
-    slug = slug.replace(/_+/g, "_");
-    
-    $form.find('input[name="slug"]').val(slug);
-}
-
 function prepare_category_form_submission()
 {
     $.blockUI(blockUI_default_params);

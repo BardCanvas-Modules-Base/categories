@@ -27,8 +27,7 @@ use hng2_base\module;
                   class="fa fa-info-circle" title="<?= $language->toggle_info ?>"></span></span>
         </div>
         <div class="input">
-            <input type="text" name="title" value="" maxlength="255"
-                   onkeyup="update_slug()" onchange="update_slug()" onblur="update_slug()">
+            <input type="text" name="title" value="" maxlength="255">
         </div>
         <div class="input info_handler" id="<?= $info_handler ?>"
              style="<? if($account->engine_prefs[$info_handler] == "hidden") echo "display: none;"; ?>">
@@ -45,8 +44,7 @@ use hng2_base\module;
                   class="fa fa-info-circle" title="<?= $language->toggle_info ?>"></span></span>
         </div>
         <div class="input">
-            <input type="text" name="slug" value="" maxlength="128"
-                   onkeyup="if( ! $(this).data('modified') ) $(this).data('modified', true);">
+            <input type="text" name="slug" value="" maxlength="128">
         </div>
         <div class="input info_handler" id="<?= $info_handler ?>"
              style="<? if($account->engine_prefs[$info_handler] == "hidden") echo "display: none;"; ?>">
