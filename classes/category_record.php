@@ -28,7 +28,6 @@ class category_record extends abstract_record
     
     public function set_new_id()
     {
-        list($sec, $usec) = explode(".", microtime(true));
-        $this->id_category = "1020" . $sec . sprintf("%05.0f", $usec) . mt_rand(1000, 9999);;
+        $this->id_category = make_unique_id("30");
     }
 }
