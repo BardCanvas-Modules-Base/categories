@@ -24,9 +24,6 @@ if( ! in_array($_POST["visibility"], array("public", "users", "level_based")))
 if( $_POST["visibility"] == "level_based" && ! is_numeric($_POST["min_level"]) )
     die($current_module->language->messages->invalid->min_level);
 
-if( ! is_numeric($_POST["min_level"]) )
-    die($current_module->language->messages->invalid->min_level);
-
 if( $_POST["visibility"] == "level_based" && $_POST["min_level"] < 0 && $_POST["min_level"] > 255 )
     die($current_module->language->messages->invalid->min_level);
 
