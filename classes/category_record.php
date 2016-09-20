@@ -28,6 +28,6 @@ class category_record extends abstract_record
     
     public function set_new_id()
     {
-        $this->id_category = make_unique_id("30");
+        $this->id_category = make_unique_id("C");
     }
 }
