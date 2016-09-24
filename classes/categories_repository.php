@@ -135,6 +135,16 @@ class categories_repository extends abstract_repository
         return $return;
     }
     
+    public function get_ids_by_slug()
+    {
+        $records = $this->find(array(), 0, 0, "");
+        $return  = array();
+        
+        foreach($records as $record) $return[$record->slug] = $record->id_category;
+        
+        return $return;
+    }
+    
     /**
      * Builds the options for a select out of a tree.
      * Watch out: no break spaces used with the bullet below!
