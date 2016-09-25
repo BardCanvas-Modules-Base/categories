@@ -22,16 +22,14 @@ class categories_repository extends abstract_repository
     public function get($id_or_slug)
     {
         global $object_cache, $mem_cache;
-    
+        
         $res = $mem_cache->get("categories:{$id_or_slug}");
         if( is_object($res) ) return $res;
         
         if( $object_cache->exists($this->table_name, $id_or_slug) )
             return $object_cache->get($this->table_name, $id_or_slug);
-    
-        if( is_numeric($id_or_slug) ) $where = array("{$this->key_column_name}" => $id_or_slug);
-        else                          $where = array("slug"                     => $id_or_slug);
         
+        $where = array("id_category = '$id_or_slug' or slug = '$id_or_slug'");
         $res   = $this->find($where, 1, 0, "");
         
         if( count($res) == 0 ) return null;

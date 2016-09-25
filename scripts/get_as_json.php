@@ -17,13 +17,13 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: application/json; charset=utf-8");
 
-if( ! $account->_is_admin ) die(json_encode(array("message" => $language->errors->page_requires_login )));
+if( ! $account->_is_admin ) die(json_encode(array("message" => trim($language->errors->page_requires_login) )));
 
-if( empty($_GET["id_category"]) ) die(json_encode(array("message" => $current_module->language->messages->missing->id )));
+if( empty($_GET["id_category"]) ) die(json_encode(array("message" => trim($current_module->language->messages->missing->id) )));
 
 $repository = new categories_repository();
 $record = $repository->get($_GET["id_category"]);
 
-if( is_null($record) ) die(json_encode(array("message" => $current_module->language->messages->category_not_found )));
+if( is_null($record) ) die(json_encode(array("message" => trim($current_module->language->messages->category_not_found) )));
 
 echo json_encode(array("message" => "OK", "data" => $record->get_as_associative_array()));
