@@ -175,7 +175,7 @@ $tree    = $repository->get_slug_paths();
                     ?>
                 </td>
                 <td>
-                    <div class="principal_data"><?= $row->title ?></div>
+                    <div class="principal_data"><?= $row->title ?> [<code><?= $row->id_category ?></code>]</div>
                     
                     <div class="actions">
                         <span class="action pseudo_link" onclick="edit_category('<?= $row->id_category ?>')">
