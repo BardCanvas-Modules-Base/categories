@@ -22,7 +22,7 @@ if( ! $account->_is_admin ) die(json_encode(array("message" => trim($language->e
 if( empty($_GET["id_category"]) ) die(json_encode(array("message" => trim($current_module->language->messages->missing->id) )));
 
 $repository = new categories_repository();
-$record = $repository->get($_GET["id_category"]);
+$record     = $repository->get($_GET["id_category"], true);
 
 if( is_null($record) ) die(json_encode(array("message" => trim($current_module->language->messages->category_not_found) )));
 

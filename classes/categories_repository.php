@@ -15,19 +15,23 @@ class categories_repository extends abstract_repository
     );
     
     /**
-     * @param $id_or_slug
+     * @param      $id_or_slug
+     * @param bool $forced
      *
      * @return category_record|null
      */
-    public function get($id_or_slug)
+    public function get($id_or_slug, $forced = false)
     {
         global $object_cache, $mem_cache;
         
-        $res = $mem_cache->get("categories:{$id_or_slug}");
-        if( is_object($res) ) return $res;
-        
-        if( $object_cache->exists($this->table_name, $id_or_slug) )
-            return $object_cache->get($this->table_name, $id_or_slug);
+        if( ! $forced )
+        {
+            if( $object_cache->exists($this->table_name, $id_or_slug) )
+                return $object_cache->get($this->table_name, $id_or_slug);
+            
+            $res = $mem_cache->get("categories:{$id_or_slug}");
+            if( is_object($res) ) return $res;
+        }
         
         $where = array("id_category = '$id_or_slug' or slug = '$id_or_slug'");
         $res   = $this->find($where, 1, 0, "");
