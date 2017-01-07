@@ -12,7 +12,7 @@ use hng2_modules\categories\categories_repository;
 
 include "../../config.php";
 include "../../includes/bootstrap.inc";
-if( ! $account->_is_admin ) throw_fake_404();
+if( ! $account->has_admin_rights_to_module("categories") ) throw_fake_401();
 
 if( empty($_POST["title"]) )       die($current_module->language->messages->missing->title);
 if( empty($_POST["slug"]) )        die($current_module->language->messages->missing->slug);

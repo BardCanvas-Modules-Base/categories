@@ -14,7 +14,7 @@ use hng2_modules\categories\categories_repository;
 
 include "../../config.php";
 include "../../includes/bootstrap.inc";
-if( ! $account->_is_admin ) throw_fake_401();
+if( ! $account->has_admin_rights_to_module("categories") ) throw_fake_401();
 
 if( empty($_GET["id_category"]) ) die($current_module->language->messages->missing->id);
 

@@ -17,7 +17,8 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: application/json; charset=utf-8");
 
-if( ! $account->_is_admin ) die(json_encode(array("message" => trim($language->errors->page_requires_login) )));
+if( ! $account->has_admin_rights_to_module("categories") )
+    die(json_encode(array("message" => trim($language->errors->access_denied) )));
 
 if( empty($_GET["id_category"]) ) die(json_encode(array("message" => trim($current_module->language->messages->missing->id) )));
 

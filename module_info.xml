@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.4.3</version>
+    <version>1.5</version>
     <group>BardCanvas</group>
     <admin_only>true</admin_only>
     
@@ -13,7 +13,7 @@
     </working_flags>
     
     <menu_items>
-        <item strict_admin_level="255">
+        <item>
             <caption_language_var>admin_menu_caption</caption_language_var>
             <url></url>
         </item>
