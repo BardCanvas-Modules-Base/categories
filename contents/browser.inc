@@ -67,14 +67,14 @@ $pagination   = $browser->build_pagination($record_count, $limit, $offset);
 #region Data grabbing
 switch( $order )
 {
-    case  1: $sqlorder = "id_category asc,  parent_category asc";                       break;
-    case  2: $sqlorder = "id_category desc, parent_category asc";                       break;
-    case  3: $sqlorder = "title asc,        parent_category asc";                       break;
-    case  4: $sqlorder = "title desc,       parent_category asc";                       break;
-    case  5: $sqlorder = "visibility asc,   title asc,          parent_category asc";   break;
-    case  6: $sqlorder = "visibility desc,  title desc,         parent_category asc";   break;
-    case  7: $sqlorder = "min_level asc,    title asc,          parent_category asc";   break;
-    case  8: $sqlorder = "min_level desc,   title desc,         parent_category asc";   break;
+    case  1: $sqlorder = "id_category asc,     parent_category asc";                break;
+    case  2: $sqlorder = "id_category desc,    parent_category asc";                break;
+    case  3: $sqlorder = "parent_category asc, title asc        ";                  break;
+    case  4: $sqlorder = "parent_category asc, title desc       ";                  break;
+    case  5: $sqlorder = "visibility asc,      parent_category asc, title asc  ";   break;
+    case  6: $sqlorder = "visibility desc,     parent_category asc, title desc ";   break;
+    case  7: $sqlorder = "min_level asc,       parent_category asc, title asc  ";   break;
+    case  8: $sqlorder = "min_level desc,      parent_category asc, title desc ";   break;
 }
 
 $records = $repository->find($where, $limit, $offset, $sqlorder);
