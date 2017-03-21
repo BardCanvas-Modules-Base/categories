@@ -67,10 +67,10 @@ $pagination   = $browser->build_pagination($record_count, $limit, $offset);
 #region Data grabbing
 switch( $order )
 {
-    case  1: $sqlorder = "id_category asc,     parent_category asc";                break;
-    case  2: $sqlorder = "id_category desc,    parent_category asc";                break;
-    case  3: $sqlorder = "parent_category asc, title asc        ";                  break;
-    case  4: $sqlorder = "parent_category asc, title desc       ";                  break;
+    case  1: $sqlorder = "parent_category asc,  title asc";                         break;
+    case  2: $sqlorder = "parent_category desc, title desc";                        break;
+    case  3: $sqlorder = "title asc";                                               break;
+    case  4: $sqlorder = "title desc";                                              break;
     case  5: $sqlorder = "visibility asc,      parent_category asc, title asc  ";   break;
     case  6: $sqlorder = "visibility desc,     parent_category asc, title desc ";   break;
     case  7: $sqlorder = "min_level asc,       parent_category asc, title asc  ";   break;
@@ -150,13 +150,13 @@ $tree    = $repository->get_slug_paths();
                     src='{$config->full_root_path}/media/icons/order_asc" . ($order == $this_cell->sort_asc->order ? "_this" : "") . ".gif' 
                     align='absmiddle' width='7' height='7'  style='cursor: pointer;'
                     alt='{$this_cell->sort_asc->alt}' title='{$this_cell->sort_asc->alt}'
-                    onclick=\"document.filter_form.order.value='{$this_cell->sort_asc->order}'; document.filter_form.submit();\">&nbsp;";
+                    onclick=\"document.filter_form.order.value='{$this_cell->sort_asc->order}'; $('#filter_form').submit();\">&nbsp;";
                     ?><?= $this_cell->content ?><?
                     if( $this_cell->sort_desc->enabled == true ) echo "&nbsp;<img
                     src='{$config->full_root_path}/media/icons/order_desc" . ($order == $this_cell->sort_desc->order ? "_this" : "") . ".gif' 
                     align='absmiddle' width='7' height='7'  style='cursor: pointer;'
                     alt='{$this_cell->sort_desc->alt}' title='{$this_cell->sort_desc->alt}'
-                    onclick=\"document.filter_form.order.value='{$this_cell->sort_desc->order}'; document.filter_form.submit();\">";
+                    onclick=\"document.filter_form.order.value='{$this_cell->sort_desc->order}'; $('#filter_form').submit();\">";
                     ?></th>
             <? endforeach; ?>
         </tr>
@@ -165,7 +165,7 @@ $tree    = $repository->get_slug_paths();
         <tbody>
         <? foreach( $records as $row ): ?>
             <tr data-record-id="<?= $row->id_category ?>">
-                <td>
+                <td nowrap>
                     <?
                     $path = $tree[$row->id_category];
                     $parts = explode("/", $path);
@@ -196,8 +196,8 @@ $tree    = $repository->get_slug_paths();
                 </td>
                 <td><?= $row->slug ?></td>
                 <td><?= $row->description ?></td>
-                <td><?= $row->visibility ?></td>
-                <td><?= $row->min_level ?></td>
+                <td align="center"><?= $row->visibility ?></td>
+                <td align="center"><?= $row->min_level ?></td>
             </tr>
         <? endforeach; ?>
         </tbody>

@@ -25,6 +25,9 @@
         <columns>
             <path>
                 <caption>Parent</caption>
+                <layout xnowrap="true" />
+                <order_asc  id="1">Order by parent + category title ascending</order_asc>
+                <order_desc id="2">Order by parent + category title descending</order_desc>
             </path>
             <title>
                 <caption>Category</caption>
@@ -39,13 +42,15 @@
             </description>
             <visibility>
                 <caption>Visibility</caption>
+                <layout xnowrap="true" />
                 <order_asc  id="5">Order by visibility + category title ascending</order_asc>
                 <order_desc id="6">Order by visibility + category title descending</order_desc>
             </visibility>
             <min_level>
                 <caption>Req level</caption>
-                <order_asc  id="5">Order by required level + category title ascending</order_asc>
-                <order_desc id="6">Order by required level + category title descending</order_desc>
+                <layout xnowrap="true" />
+                <order_asc  id="7">Order by required level + category title ascending</order_asc>
+                <order_desc id="8">Order by required level + category title descending</order_desc>
             </min_level>
         </columns>
         <actions>

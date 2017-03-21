@@ -23,7 +23,7 @@
             $form.find('input[name="search_for"]').val('');
             $form.find('select[name="limit"] options:first').prop('selected', true);
             $form.find('input[name="offset"]').val('0');
-            $form.find('input[name="order"]').val('3');
+            $form.find('input[name="order"]').val('1');
         }
         
         function paginate(value)
