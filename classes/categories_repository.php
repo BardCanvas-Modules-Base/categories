@@ -115,9 +115,11 @@ class categories_repository extends abstract_repository
             );
     }
     
-    public function get_as_tree_for_select($where = array(), $order = "title asc", $with_description = false)
+    public function get_as_tree_for_select($where = array(), $order = "parent_category, title", $with_description = false)
     {
         global $account;
+        
+        if( empty($order) ) $order = "parent_category, title";
         
         if( ! $account->_exists )
             $where[] = "visibility = 'public'";
@@ -133,7 +135,6 @@ class categories_repository extends abstract_repository
         $tree   = $this->build_tree($records, "", "");
         $return = $this->format_tree_for_selector($tree, "", $with_description);
         
-        asort($return);
         return $return;
     }
     

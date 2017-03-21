@@ -27,7 +27,7 @@ $with_description = $_GET["with_description"] == "true";
 $main_category = $repository->get("0000000000000", true);
 $tree_filter   = array("id_category <> '0000000000000'");
 $data          = array("0000000000000" => $main_category->title);
-$res           = $repository->get_as_tree_for_select($tree_filter, "title asc", $with_description);
+$res           = $repository->get_as_tree_for_select($tree_filter, "", $with_description);
 
 foreach($res as $key => $val) $data[$key] = $val;
 
