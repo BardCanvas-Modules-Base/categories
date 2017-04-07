@@ -14,6 +14,11 @@ class categories_repository extends abstract_repository
         "( select title from categories c2 where c2.id_category = categories.parent_category ) as parent_category_title",
     );
     
+    public function add_select_fields($fields_array)
+    {
+        $this->additional_select_fields = array_merge($this->additional_select_fields, $fields_array);
+    }
+    
     /**
      * @param      $id_or_slug
      * @param bool $forced
