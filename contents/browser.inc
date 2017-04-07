@@ -79,6 +79,10 @@ switch( $order )
 
 $records = $repository->find($where, $limit, $offset, $sqlorder);
 $tree    = $repository->get_slug_paths();
+
+$per_column_function_hooks = array();
+$current_module->load_extensions("browser", "per_record_function_hooks");
+
 #endregion
 ?>
 
@@ -165,6 +169,8 @@ $tree    = $repository->get_slug_paths();
         <tbody>
         <? foreach( $records as $row ): ?>
             <tr data-record-id="<?= $row->id_category ?>">
+                
+                <!-- Path -->
                 <td nowrap>
                     <?
                     $path = $tree[$row->id_category];
@@ -172,8 +178,14 @@ $tree    = $repository->get_slug_paths();
                     array_pop($parts);
                     if( count($parts) == 1 ) echo "―";
                     else                     echo implode("<span class='fa fa-angle-right fa-fw'></span>", $parts);
+                    
+                    if( ! empty($per_column_function_hooks["parent"]) )
+                        foreach($per_column_function_hooks["parent"] as $function)
+                            if( function_exists($function) ) $function($row);
                     ?>
                 </td>
+                
+                <!-- Details -->
                 <td>
                     <div class="principal_data"><?= $row->title ?> [<code><?= $row->id_category ?></code>]</div>
                     
@@ -192,10 +204,38 @@ $tree    = $repository->get_slug_paths();
                                 <?= $current_module->language->record_nav->actions->delete ?>
                             </span>
                         <? endif; ?>
+                        
+                        <?
+                        if( ! empty($per_column_function_hooks["actions"]) )
+                            foreach($per_column_function_hooks["actions"] as $function)
+                                if( function_exists($function) ) $function($row);
+                        ?>
                     </div>
                 </td>
-                <td><?= $row->slug ?></td>
-                <td><?= $row->description ?></td>
+                
+                <!-- Slug -->
+                <td>
+                    <?
+                    echo $row->slug;
+                    
+                    if( ! empty($per_column_function_hooks["slug"]) )
+                        foreach($per_column_function_hooks["slug"] as $function)
+                            if( function_exists($function) ) $function($row);
+                    ?>
+                </td>
+                
+                <!-- Description -->
+                <td>
+                    <?
+                    echo $row->description;
+                    
+                    if( ! empty($per_column_function_hooks["description"]) )
+                        foreach($per_column_function_hooks["description"] as $function)
+                            if( function_exists($function) ) $function($row);
+                    ?>
+                </td>
+                
+                <!-- Other -->
                 <td align="center"><?= $row->visibility ?></td>
                 <td align="center"><?= $row->min_level ?></td>
             </tr>
