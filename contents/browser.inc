@@ -77,6 +77,12 @@ switch( $order )
     case  8: $sqlorder = "min_level desc,      parent_category asc, title desc ";   break;
 }
 
+$config->globals["categories:nav/presettings_data"] = array($sqlorder, array());
+$current_module->load_extensions("browser", "presettings_data");
+list($sqlorder, $additional_select_columns) = $config->globals["categories:nav/presettings_data"];
+unset( $config->globals["categories:nav/presettings_data"] );
+if( ! empty($additional_select_columns) ) $repository->add_select_fields($additional_select_columns);
+
 $records = $repository->find($where, $limit, $offset, $sqlorder);
 $tree    = $repository->get_slug_paths();
 
@@ -147,7 +153,14 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
         
         <thead>
         <tr>
-            <? foreach( $browser->build_table_header($current_module->language->record_nav->columns) as $this_cell ): ?>
+            <?
+            $config->globals["categories:nav/additional_headers"]
+                = $browser->build_table_header($current_module->language->record_nav->columns);
+            $current_module->load_extensions("browser", "additional_headers");
+            $headers = $config->globals["categories:nav/additional_headers"];
+            unset( $config->globals["categories:nav/additional_headers"] );
+            
+            foreach( $headers as $this_cell ): ?>
                 <th align="<?= $this_cell->xalign ?>" <? if( $this_cell->xnowrap == true ) echo "nowrap "; ?>
                     <? if( ! empty($this_cell->xwidth) ) echo "width='$this_cell->xwidth' "; ?> class="<?= $this_cell->xclass ?>"><?
                     if( $this_cell->sort_asc->enabled == true ) echo "<img
@@ -238,6 +251,9 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                 <!-- Other -->
                 <td align="center"><?= $row->visibility ?></td>
                 <td align="center"><?= $row->min_level ?></td>
+                
+                <!-- Additional columns -->
+                <? $current_module->load_extensions("browser", "additional_columns"); ?>
             </tr>
         <? endforeach; ?>
         </tbody>
