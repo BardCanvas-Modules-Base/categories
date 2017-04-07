@@ -49,4 +49,8 @@
         <widget for="left_sidebar" id="listing" type="php" is_clonable="false" file="left_sidebar_listing.inc" />
     </widgets>
     
+    <extension_areas_info><![CDATA[
+        Browser: Per record function hooks.
+    ]]></extension_areas_info>
+    
 </module>
