@@ -34,7 +34,7 @@ class categories_repository extends abstract_repository
             if( $object_cache->exists($this->table_name, $id_or_slug) )
                 return $object_cache->get($this->table_name, $id_or_slug);
             
-            $res = $mem_cache->get("categories:{$id_or_slug}");
+            $res = $mem_cache->get("{$this->table_name}:{$id_or_slug}");
             if( is_object($res) ) return $res;
         }
         
@@ -45,7 +45,7 @@ class categories_repository extends abstract_repository
         
         $record = current($res);
         $object_cache->set($this->table_name, $id_or_slug, $record);
-        $mem_cache->set("categories:{$id_or_slug}", $record, 0, 60*60);
+        $mem_cache->set("{$this->table_name}:{$id_or_slug}", $record, 0, 60*60);
         
         return $record;
     }
@@ -70,7 +70,7 @@ class categories_repository extends abstract_repository
      */
     public function save($record)
     {
-        global $database, $mem_cache;
+        global $database;
         
         $this->validate_record($record);
         $obj = $record->get_for_database_insertion();
@@ -102,7 +102,7 @@ class categories_repository extends abstract_repository
                 min_level       = '{$obj->min_level}'
         ");
         
-        if($res) $mem_cache->purge_by_prefix("{$this->table_name}:");
+        if($res) $this->purge_caches();
         
         return $res;
     }
@@ -298,14 +298,14 @@ class categories_repository extends abstract_repository
                           visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
-            $cache_key = "{$this->table_name}:listing-bylevel:{$account->level}";
+            $cache_key = "{$this->table_name}:listing-bylevel-v3:{$account->level}";
         }
         
         $res = $mem_cache->get($cache_key);
         if( ! empty($res) ) return $res;
         
         $records = $this->find($where, 0, 0, "title");
-        $mem_cache->set($cache_key, $records, 0, 60*60*24);
+        $mem_cache->set($cache_key, $records, 0, 60*60);
         return $records;
     }
     
