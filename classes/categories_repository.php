@@ -279,9 +279,12 @@ class categories_repository extends abstract_repository
     }
     
     /**
+     * @param int $cache_ttl
+     * @param int $cache_version
+     *
      * @return category_record[]
      */
-    public function get_for_listings()
+    public function get_for_listings($cache_ttl = 0, $cache_version = 0)
     {
         global $account, $mem_cache;
         
@@ -290,7 +293,7 @@ class categories_repository extends abstract_repository
         if( ! $account->_exists )
         {
             $where[] = "visibility = 'public'";
-            $cache_key = "{$this->table_name}:listing-public";
+            $cache_key = "{$this->table_name}:listing-public-v{$cache_version}";
         }
         else
         {
@@ -298,14 +301,14 @@ class categories_repository extends abstract_repository
                           visibility = 'public' or visibility = 'users' or 
                           (visibility = 'level_based' and '{$account->level}' >= min_level) 
                         )";
-            $cache_key = "{$this->table_name}:listing-bylevel-v3:{$account->level}";
+            $cache_key = "{$this->table_name}:listing-bylevel-v{$cache_version}:{$account->level}";
         }
         
         $res = $mem_cache->get($cache_key);
         if( ! empty($res) ) return $res;
         
         $records = $this->find($where, 0, 0, "title");
-        $mem_cache->set($cache_key, $records, 0, 60*60);
+        $mem_cache->set($cache_key, $records, 0, $cache_ttl * 3600);
         return $records;
     }
     
