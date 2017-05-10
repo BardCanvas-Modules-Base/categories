@@ -127,6 +127,30 @@
         <group_caption>Categorías</group_caption>
     </left_sidebar>
     
+    <widgets>
+        <listing>
+            <title>Listado de categorías</title>
+            <info>Lista adaptable de categorías disponibles</info>
+            <editable_specs>
+                <specs key="cache_ttl">
+                    <title>Tiempo de vida del caché</title>
+                    <description><![CDATA[
+                        Especificado en horas.<br>
+                        Valor predeterminado: <code>0</code> (caché desactivado).
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_version">
+                    <title>Versión del caché</title>
+                    <description><![CDATA[
+                        Número de versión del caché. Si deseas refrescarlo, increméntalo por 1.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+            </editable_specs>
+        </listing>
+    </widgets>
+    
     <messages>
         <missing>
             <id>No se ha recibido el identificador de categoría</id>

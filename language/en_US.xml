@@ -128,6 +128,30 @@
         <group_caption>Categories</group_caption>
     </left_sidebar>
     
+    <widgets>
+        <listing>
+            <title>Categories Listing</title>
+            <info>Adaptive list of available categories</info>
+            <editable_specs>
+                <specs key="cache_ttl">
+                    <title>Cache TTL</title>
+                    <description><![CDATA[
+                        Time to live (in hours) for the listing cache.<br>
+                        Default: <code>0</code> (cache disabled).
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+                <specs key="cache_version">
+                    <title>Cache version</title>
+                    <description><![CDATA[
+                        Version of the cache. If you want to refresh it, increment it by 1.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
+            </editable_specs>
+        </listing>
+    </widgets>
+    
     <messages>
         <missing>
             <id>Category id missing</id>

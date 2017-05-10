@@ -14,18 +14,32 @@
  * @var \SimpleXMLElement $widget
  * @var string            $seed
  * @var string            $data_key
- *
+ * 
+ * @var toolbox           $toolbox
+ * 
  * @return string
  */
 
 use hng2_base\module;
 use hng2_base\template;
 use hng2_modules\categories\categories_repository;
+use hng2_modules\widgets_manager\toolbox;
 
 global $config, $language;
 
+if( empty($config->globals["widgets_manager:toolbox"]) )
+    $config->globals["widgets_manager:toolbox"] = new toolbox();
+
+$toolbox = $config->globals["widgets_manager:toolbox"];
+$placed_widget = $toolbox->get_widget_from_data_key($data_key);
+if( is_null($placed_widget) ) return "";
+
+$data    = $toolbox->load_widget_data($placed_widget);
+$ttl     = empty($data["cache_ttl"])     ? 0 : $data["cache_ttl"];
+$version = empty($data["cache_version"]) ? 1 : $data["cache_version"];
+
 $repository = new categories_repository();
-$listing    = $repository->get_for_listings();
+$listing    = $repository->get_for_listings($ttl, $version);
 $lines      = array();
 
 if( empty($listing) ) return "";
