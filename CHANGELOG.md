@@ -1,6 +1,11 @@
 
 # Categories Module Change Log
 
+## [1.7.0] - 2017-05-13
+
+- Updated widgets to support new widgets manager version.
+  **WARNING:** After updating to this version, all existing widgets must be reviewed.
+
 ## [1.6.2] - 2017-04-29
 
 - Tuned caching.
