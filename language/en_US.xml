@@ -148,6 +148,13 @@
                     ]]></description>
                     <type>number</type>
                 </specs>
+                <specs key="public_categories_only">
+                    <title>Public categories only</title>
+                    <description><![CDATA[
+                        If enabled, all categories for specific levels will be skipped.
+                    ]]></description>
+                    <type>boolean</type>
+                </specs>
             </editable_specs>
         </listing>
     </widgets>

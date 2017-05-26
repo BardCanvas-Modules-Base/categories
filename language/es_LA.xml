@@ -147,6 +147,13 @@
                     ]]></description>
                     <type>number</type>
                 </specs>
+                <specs key="public_categories_only">
+                    <title>Sólo categorías públicas</title>
+                    <description><![CDATA[
+                        De activarse, se omitirán las categorías para niveles específicos.
+                    ]]></description>
+                    <type>boolean</type>
+                </specs>
             </editable_specs>
         </listing>
     </widgets>
