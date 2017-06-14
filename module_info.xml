@@ -50,7 +50,10 @@
     </widgets>
     
     <extension_areas_info><![CDATA[
+        Index (browser wrapper): top, bottom.
         Browser: Presettings data, Per record function hooks, additional headers, additional columns.
+        Form: before rendering, leftcol additions, rightcol additions, before submit button.
+        Save: before validations, before saving, after saving.
     ]]></extension_areas_info>
     
 </module>

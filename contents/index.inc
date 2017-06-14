@@ -14,6 +14,8 @@
 
 <script type="text/javascript" src="<?= $config->full_root_path ?>/categories/media/functions~v<?=$config->scripts_version?>.js"></script>
 
+<? $current_module->load_extensions("index", "top"); ?>
+
 <div id="main_workarea">
     
     <script type="text/javascript">
@@ -70,3 +72,5 @@
 <div id="category_messages" style="display: none">
     <div class="delete_confirmation"><?= unindent($current_module->language->messages->delete_confirmation) ?></div>
 </div>
+
+<? $current_module->load_extensions("index", "bottom"); ?>

@@ -14,6 +14,8 @@ include "../../config.php";
 include "../../includes/bootstrap.inc";
 if( ! $account->has_admin_rights_to_module("categories") ) throw_fake_401();
 
+$current_module->load_extensions("save", "before_validations");
+
 if( empty($_POST["title"]) )       die($current_module->language->messages->missing->title);
 if( empty($_POST["slug"]) )        die($current_module->language->messages->missing->slug);
 if( empty($_POST["visibility"]) )  die($current_module->language->messages->missing->visibility);
@@ -49,5 +51,9 @@ $category->set_from_post();
 if( $category->visibility != "level_based" ) $category->min_level = 0;
 
 if( empty($_POST["id_category"]) ) $category->set_new_id();
+
+$current_module->load_extensions("save", "before_saving");
 $repository->save($category);
+$current_module->load_extensions("save", "after_saving");
+
 echo "OK";

@@ -10,6 +10,8 @@
  */
 
 use hng2_base\module;
+
+$current_module->load_extensions("form", "before_rendering");
 ?>
 
 <div id="category_form_target" style="display: none;"></div>
@@ -71,6 +73,8 @@ use hng2_base\module;
                     <?= $current_module->language->form->fields->description->info ?>
                 </div>
             </div>
+            
+            <? $current_module->load_extensions("form", "leftcol_additions"); ?>
         </div>
         
         <div class="col">
@@ -142,7 +146,11 @@ use hng2_base\module;
                     <?= $current_module->language->form->fields->parent_category->info ?>
                 </div>
             </div>
+            
+            <? $current_module->load_extensions("form", "rightcol_additions"); ?>
         </div>
+        
+        <? $current_module->load_extensions("form", "before_submit_button"); ?>
         
         <p align="center">
             <button type="submit" class="big_form_submit_button">
