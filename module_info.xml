@@ -50,7 +50,7 @@
     </widgets>
     
     <extension_areas_info><![CDATA[
-        Browser: Per record function hooks.
+        Browser: Presettings data, Per record function hooks, additional headers, additional columns.
     ]]></extension_areas_info>
     
 </module>
