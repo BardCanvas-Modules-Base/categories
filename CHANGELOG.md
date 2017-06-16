@@ -1,6 +1,11 @@
 
 # Categories Module Change Log
 
+## [1.8.0] - 2017-06-16
+
+- Optimized editor form.
+- Added extension points to the index, editing form and saving scripts.
+
 ## [1.7.1] - 2017-05-25
 
 - Added option to hide non-public categories on the left sidebar widget.
