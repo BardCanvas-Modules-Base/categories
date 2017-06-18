@@ -45,7 +45,7 @@ class categories_repository extends abstract_repository
         
         $record = current($res);
         $object_cache->set($this->table_name, $id_or_slug, $record);
-        $mem_cache->set("{$this->table_name}:{$id_or_slug}", $record, 0, 60*60);
+        $mem_cache->set("{$this->table_name}:{$id_or_slug}", $record, 0, 60*5);
         
         return $record;
     }
@@ -308,7 +308,7 @@ class categories_repository extends abstract_repository
         if( ! empty($res) ) return $res;
         
         $records = $this->find($where, 0, 0, "title");
-        $mem_cache->set($cache_key, $records, 0, $cache_ttl * 3600);
+        $mem_cache->set($cache_key, $records, 0, $cache_ttl);
         return $records;
     }
     

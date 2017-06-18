@@ -35,7 +35,7 @@ $placed_widget = $toolbox->get_widget_from_data_key($data_key);
 if( is_null($placed_widget) ) return "";
 
 $data    = $toolbox->load_widget_data($placed_widget);
-$ttl     = empty($data["cache_ttl"])     ? 0 : $data["cache_ttl"];
+$ttl     = (empty($data["cache_ttl"])    ? 0 : $data["cache_ttl"]) * 3600;
 $version = empty($data["cache_version"]) ? 1 : $data["cache_version"];
 
 $repository = new categories_repository();
