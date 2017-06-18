@@ -1,6 +1,10 @@
 
 # Categories Module Change Log
 
+## [1.8.1] - 2017-06-17
+
+- Tuned caching.
+
 ## [1.8.0] - 2017-06-16
 
 - Optimized editor form.
