@@ -54,6 +54,7 @@
         Browser: Presettings data, Per record function hooks, additional headers, additional columns.
         Form: before rendering, leftcol additions, rightcol additions, before submit button.
         Save: before validations, before saving, after saving.
+        Get As JSON: before outputting data.
     ]]></extension_areas_info>
     
 </module>

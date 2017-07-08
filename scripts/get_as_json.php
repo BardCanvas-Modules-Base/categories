@@ -27,4 +27,8 @@ $record     = $repository->get($_GET["id_category"], true);
 
 if( is_null($record) ) die(json_encode(array("message" => trim($current_module->language->messages->category_not_found) )));
 
-echo json_encode(array("message" => "OK", "data" => $record->get_as_associative_array()));
+$data = $record->get_as_associative_array();
+$config->globals["modules:categories.json_record"] =& $data;
+$current_module->load_extensions("get_as_json", "before_outputting_data");
+
+echo json_encode(array("message" => "OK", "data" => $data));
