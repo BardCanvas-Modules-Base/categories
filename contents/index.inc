@@ -12,7 +12,13 @@
 <script type="text/javascript" src="<?=$config->full_root_path?>/lib/jquery.exptextarea.js"></script>
 <script type="text/javascript"> $(document).ready(function() { $('.expandible_textarea').expandingTextArea(); }); </script>
 
-<script type="text/javascript" src="<?= $config->full_root_path ?>/categories/media/functions~v<?=$config->scripts_version?>.js"></script>
+<script type="text/javascript">
+    var category_form_post_show_callbacks = [];
+    var category_form_reset_callbacks     = [];
+    var category_form_fill_callbacks      = [];
+    var category_form_presubmit_callbacks = [];
+</script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/categories/media/functions~v1.8.2-5.js"></script>
 
 <? $current_module->load_extensions("index", "top"); ?>
 

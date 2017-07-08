@@ -1,4 +1,9 @@
 
+var category_form_post_show_callbacks;
+var category_form_reset_callbacks;
+var category_form_fill_callbacks;
+var category_form_presubmit_callbacks;
+
 function prepare_category_addition()
 {
     var $workarea = $('#form_workarea');
@@ -94,6 +99,10 @@ function fill_category_form($form, record)
     $form.find('textarea[name="description"]').val( record.description );
     $form.find('input[name="visibility"][value="' +  record.visibility + '"]').click();
     $form.find('input[name="min_level"][value="' +  record.min_level + '"]').closest('label').click();
+    
+    if( typeof category_form_fill_callbacks == 'object' )
+        for(var i in category_form_fill_callbacks)
+            category_form_fill_callbacks[i]($form, record);
 }
 
 function update_category_selector(preselected_id, editing_record_id)
@@ -168,12 +177,21 @@ function reset_category_form()
     $form[0].reset();
     $form.find('input[name="id_category"]').val('');
     $form.find('input[name="slug"]').data('modified', false);
+    
+    if( typeof category_form_reset_callbacks == 'object' )
+        for(var i in category_form_reset_callbacks)
+            category_form_reset_callbacks[i]($form);
 }
 
 function show_category_form()
 {
     $('#main_workarea').hide('fast');
-    $('#form_workarea').show('fast');
+    $('#form_workarea').show('fast', function()
+    {
+        if( typeof category_form_post_show_callbacks == 'object' )
+            for(var i in category_form_post_show_callbacks)
+                category_form_post_show_callbacks[i]();
+    });
 }
 
 function hide_category_form()
@@ -182,7 +200,14 @@ function hide_category_form()
     $('#main_workarea').show('fast');
 }
 
-function prepare_category_form_submission()
+function prepare_category_form_serialization($form, options)
+{
+    if( typeof category_form_presubmit_callbacks == 'object' )
+        for(var i in category_form_presubmit_callbacks)
+            category_form_presubmit_callbacks[i]($form);
+}
+
+function prepare_category_form_submission(formData, $form, options)
 {
     $.blockUI(blockUI_default_params);
 }
@@ -204,7 +229,8 @@ $(document).ready(function()
 {
     $('#category_form').ajaxForm({
         target: '#category_form_target',
-        beforeSubmit: prepare_category_form_submission,
-        success:      process_category_form_response
+        beforeSerialize: prepare_category_form_serialization,
+        beforeSubmit:    prepare_category_form_submission,
+        success:         process_category_form_response
     });
 });
