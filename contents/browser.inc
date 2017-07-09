@@ -184,13 +184,17 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
             <tr data-record-id="<?= $row->id_category ?>">
                 
                 <!-- Path -->
-                <td nowrap>
+                <td>
                     <?
-                    $path = $tree[$row->id_category];
+                    $path  = $tree[$row->id_category];
                     $parts = explode("/", $path);
                     array_pop($parts);
-                    if( count($parts) == 1 ) echo "―";
-                    else                     echo implode("<span class='fa fa-angle-right fa-fw'></span>", $parts);
+                    if( count($parts) <= 1 )
+                        echo "―";
+                    else
+                        foreach($parts as $index => $part)
+                            if( $index > 0 )
+                                echo "<span class='inline-block nowrap'><span class='fa fa-angle-right fa-fw'></span>$part</span> ";
                     
                     if( ! empty($per_column_function_hooks["parent"]) )
                         foreach($per_column_function_hooks["parent"] as $function)
