@@ -190,11 +190,21 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                     $parts = explode("/", $path);
                     array_pop($parts);
                     if( count($parts) <= 1 )
+                    {
                         echo "―";
+                    }
                     else
+                    {
                         foreach($parts as $index => $part)
-                            if( $index > 0 )
-                                echo "<span class='inline-block nowrap'><span class='fa fa-angle-right fa-fw'></span>$part</span> ";
+                        {
+                            if( $index == 0 ) continue;
+                            
+                            if( $index == 1 )
+                                echo "<span class='inline-block nowrap'>$part</span>";
+                            else
+                                echo "<span class='inline-block nowrap'><span class='fa fa-angle-right fa-fw'></span>$part</span>";
+                        }
+                    }
                     
                     if( ! empty($per_column_function_hooks["parent"]) )
                         foreach($per_column_function_hooks["parent"] as $function)
