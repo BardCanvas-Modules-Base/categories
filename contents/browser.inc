@@ -254,7 +254,8 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                 <!-- Description -->
                 <td width="50%">
                     <?
-                    echo $row->description;
+                    if( empty($row->description) ) echo $current_module->language->record_nav->columns->description->empty;
+                    else                           echo $row->description;
                     
                     if( ! empty($per_column_function_hooks["description"]) )
                         foreach($per_column_function_hooks["description"] as $function)

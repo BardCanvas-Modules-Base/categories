@@ -39,6 +39,7 @@
             </slug>
             <description>
                 <caption>Details</caption>
+                <empty>No description</empty>
             </description>
             <visibility>
                 <caption>Visibility</caption>
