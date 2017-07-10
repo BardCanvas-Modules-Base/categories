@@ -216,6 +216,12 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                 <td width="40%">
                     <div class="principal_data"><?= $row->title ?> [<code><?= $row->id_category ?></code>]</div>
                     
+                    <?
+                    if( ! empty($per_column_function_hooks["important_details"]) )
+                        foreach($per_column_function_hooks["important_details"] as $function)
+                            if( function_exists($function) ) $function($row);
+                    ?>
+                    
                     <div class="actions">
                         <span class="action pseudo_link" onclick="edit_category('<?= $row->id_category ?>')">
                             <span class="fa fa-pencil"></span>
