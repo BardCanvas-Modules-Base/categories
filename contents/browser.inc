@@ -213,7 +213,7 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                 </td>
                 
                 <!-- Details -->
-                <td>
+                <td width="40%">
                     <div class="principal_data"><?= $row->title ?> [<code><?= $row->id_category ?></code>]</div>
                     
                     <div class="actions">
@@ -241,10 +241,10 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                 </td>
                 
                 <!-- Slug -->
-                <td>
+                <td width="10%">
+                    <span class="pseudo_link clipboard-copy" data-clipboard-text="<?= $row->slug ?>"
+                        ><?= $row->slug ?> <span class="fa fa-clipboard"></span></span>
                     <?
-                    echo $row->slug;
-                    
                     if( ! empty($per_column_function_hooks["slug"]) )
                         foreach($per_column_function_hooks["slug"] as $function)
                             if( function_exists($function) ) $function($row);
@@ -252,7 +252,7 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                 </td>
                 
                 <!-- Description -->
-                <td>
+                <td width="50%">
                     <?
                     echo $row->description;
                     
