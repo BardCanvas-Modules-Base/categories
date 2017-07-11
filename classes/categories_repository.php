@@ -279,12 +279,14 @@ class categories_repository extends abstract_repository
     }
     
     /**
-     * @param int $cache_ttl
-     * @param int $cache_version
+     * @param int    $cache_ttl
+     * @param int    $cache_version
+     * @param string $order
+     * @param bool   $with_slug_paths
      *
      * @return category_record[]
      */
-    public function get_for_listings($cache_ttl = 0, $cache_version = 0)
+    public function get_for_listings($cache_ttl = 0, $cache_version = 0, $order = "title", $with_slug_paths = false)
     {
         global $account, $mem_cache;
         
@@ -310,7 +312,16 @@ class categories_repository extends abstract_repository
             if( ! empty($res) ) return $res;
         }
         
-        $records = $this->find($where, 0, 0, "title");
+        $records = $this->find($where, 0, 0, $order);
+        
+        if( $with_slug_paths )
+        {
+            $paths = $this->get_slug_paths($where);
+            foreach($records as &$record)
+                if( ! empty($paths[$record->id_category]) )
+                    $record->path = $paths[$record->id_category];
+        }
+        
         if( $cache_ttl > 0 ) $mem_cache->set($cache_key, $records, 0, $cache_ttl);
         
         return $records;
