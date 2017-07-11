@@ -156,6 +156,14 @@
                     ]]></description>
                     <type>boolean</type>
                 </specs>
+                <specs key="max_branch_level">
+                    <title>Max branch level</title>
+                    <description><![CDATA[
+                        By default, category subtrees are rendered entirely.
+                        If you want to limit branches to a certain level, specify it here.
+                    ]]></description>
+                    <type>number</type>
+                </specs>
             </editable_specs>
         </listing>
     </widgets>

@@ -54,6 +54,8 @@ foreach($listing as $row)
     if( $data["public_categories_only"] && $row->visibility != "public" ) continue;
     
     $level       = count(explode("/", $row->path)) - 2;
+    if( $data["max_branch_level"] > 0 && $level > $data["max_branch_level"] ) continue;
+    
     $indent      = $level * 10;
     $opener      = empty($level) ? "" : "<span style='display: inline-block; margin-left: {$indent}px;'>";
     $closer      = empty($level) ? "" : "</span>";
