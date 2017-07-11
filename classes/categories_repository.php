@@ -188,6 +188,12 @@ class categories_repository extends abstract_repository
         return $return;
     }
     
+    /**
+     * @param array  $where
+     * @param string $order
+     *
+     * @return array [id:path, id:path, ...]
+     */
     public function get_slug_paths($where = array(), $order = "title asc")
     {
         $records = $this->find($where, 0, 0, $order);
