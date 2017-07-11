@@ -304,11 +304,15 @@ class categories_repository extends abstract_repository
             $cache_key = "{$this->table_name}:listing-bylevel-v{$cache_version}:{$account->level}";
         }
         
-        $res = $mem_cache->get($cache_key);
-        if( ! empty($res) ) return $res;
+        if( $cache_ttl > 0 )
+        {
+            $res = $mem_cache->get($cache_key);
+            if( ! empty($res) ) return $res;
+        }
         
         $records = $this->find($where, 0, 0, "title");
-        $mem_cache->set($cache_key, $records, 0, $cache_ttl);
+        if( $cache_ttl > 0 ) $mem_cache->set($cache_key, $records, 0, $cache_ttl);
+        
         return $records;
     }
     
