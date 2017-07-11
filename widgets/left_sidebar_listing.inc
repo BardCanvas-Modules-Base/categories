@@ -30,7 +30,7 @@ global $config, $language;
 if( empty($config->globals["widgets_manager:toolbox"]) )
     $config->globals["widgets_manager:toolbox"] = new toolbox();
 
-$toolbox = $config->globals["widgets_manager:toolbox"];
+$toolbox       = $config->globals["widgets_manager:toolbox"];
 $placed_widget = $toolbox->get_widget_from_data_key($data_key);
 if( is_null($placed_widget) ) return "";
 
@@ -39,18 +39,28 @@ $ttl     = (empty($data["cache_ttl"])    ? 0 : $data["cache_ttl"]) * 3600;
 $version = empty($data["cache_version"]) ? 1 : $data["cache_version"];
 
 $repository = new categories_repository();
-$listing    = $repository->get_for_listings($ttl, $version);
+$listing    = $repository->get_for_listings($ttl, $version, "parent_category, title", true);
 $lines      = array();
 
 if( empty($listing) ) return "";
+
+$reordered = array();
+foreach($listing as $row) $reordered[$row->path] = $row;
+ksort($reordered);
+$listing = $reordered;
 
 foreach($listing as $row)
 {
     if( $data["public_categories_only"] && $row->visibility != "public" ) continue;
     
+    $level       = count(explode("/", $row->path)) - 2;
+    $indent      = $level * 10;
+    $opener      = empty($level) ? "" : "<span style='display: inline-block; margin-left: {$indent}px;'>";
+    $closer      = empty($level) ? "" : "</span>";
     $added_class = $template->get("current_category_slug") == $row->slug ? "selected" : "";
     $added_class .= $row->visibility == "public" ? "" : " important";
-    $lines[] = "<a class='item $added_class' href='{$config->full_root_url}/category/{$row->slug}/'>{$row->title}</a>";
+    $lines[] = "<a class='item $added_class' data-level='$level' href='{$config->full_root_url}/category/{$row->slug}/'
+                   >{$opener}{$row->title}{$closer}</a>";
 }
 
 return implode("\n", $lines);
