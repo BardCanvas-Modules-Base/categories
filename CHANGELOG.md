@@ -1,6 +1,17 @@
 
 # Categories Module Change Log
 
+## [1.9.0] - 2017-07-11
+
+- Added callback collections for JS extenders.
+- Added extension point on get_as_json.php.
+- Tuned browser layout.
+- Tuned languages.
+- Added function hooks to the categories browser.
+- Improvements and fixes to method `get_for_listings` on the categories repository.
+- Reworked rendering of left sidebar widget. Now it properly shows, indents and allow level limits of category subtrees.
+- Added preload of CodeMirror and gallery images selector for usage by extensions.
+
 ## [1.8.1] - 2017-06-17
 
 - Tuned caching.
