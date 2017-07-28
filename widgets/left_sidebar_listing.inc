@@ -47,7 +47,17 @@ if( empty($listing) ) return "";
 $reordered = array();
 foreach($listing as $row) $reordered[$row->path] = $row;
 ksort($reordered);
-$listing = $reordered;
+$is_tree = false;
+foreach($reordered as $path => $category)
+{
+    if( strpos($path, "/", 1) !== false )
+    {
+        $is_tree = true;
+        
+        break;
+    }
+}
+if( $is_tree) $listing = $reordered;
 
 foreach($listing as $row)
 {
