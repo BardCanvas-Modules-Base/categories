@@ -1,6 +1,10 @@
 
 # Categories Module Change Log
 
+## [1.9.1] - 2017-07-29
+
+- Fixed a sorting issue on the listing widget for flat listings.
+
 ## [1.9.0] - 2017-07-11
 
 - Added callback collections for JS extenders.
