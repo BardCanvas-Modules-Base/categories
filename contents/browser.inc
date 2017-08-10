@@ -107,6 +107,20 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
 </h1>
 
 <div class="filtering clearfix">
+    
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('#filter_form').keypress(function(e) {
+                if( (e.keyCode == 13) && (e.target.type != "textarea") )
+                {
+                    e.preventDefault();
+                    $(this).submit();
+                }
+            });
+        });
+    </script>
+    
     <form name="filter_form" id="filter_form" action="<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<? echo mt_rand(1, 65535); ?>"
           method="get">
         
@@ -128,7 +142,7 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
                placeholder="<?= $current_module->language->record_nav->placeholder ?>">
         
         <?= $language->record_nav->show ?>
-        <select name="limit">
+        <select name="limit" onchange="$('#filter_form').submit()">
             <? foreach(array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500) as $recs): ?>
                 <option <? if($limit == $recs) echo "selected" ?>><?= $recs ?></option>
             <? endforeach; ?>
