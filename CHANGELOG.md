@@ -1,6 +1,10 @@
 
 # Categories Module Change Log
 
+## [1.9.2] - 2017-08-11
+
+- Improved categories browser filtering functionality.
+
 ## [1.9.1] - 2017-07-29
 
 - Fixed a sorting issue on the listing widget for flat listings.
