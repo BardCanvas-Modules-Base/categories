@@ -4,6 +4,8 @@ var category_form_reset_callbacks;
 var category_form_fill_callbacks;
 var category_form_presubmit_callbacks;
 
+var browser_position = 0;
+
 function prepare_category_addition()
 {
     var $workarea = $('#form_workarea');
@@ -185,6 +187,8 @@ function reset_category_form()
 
 function show_category_form()
 {
+    browser_position = $(window).scrollTop();
+    
     $('#main_workarea').hide('fast');
     $('#form_workarea').show('fast', function()
     {
@@ -192,12 +196,14 @@ function show_category_form()
             for(var i in category_form_post_show_callbacks)
                 category_form_post_show_callbacks[i]();
     });
+    
+    $.scrollTo(0, 250);
 }
 
 function hide_category_form()
 {
     $('#form_workarea').hide('fast');
-    $('#main_workarea').show('fast');
+    $('#main_workarea').show('fast', function() { $.scrollTo(browser_position, 250); });
 }
 
 function prepare_category_form_serialization($form, options)
