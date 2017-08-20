@@ -117,7 +117,7 @@ global $modules;
     var category_form_fill_callbacks      = [];
     var category_form_presubmit_callbacks = [];
 </script>
-<script type="text/javascript" src="<?= $config->full_root_path ?>/categories/media/functions~v1.8.2-5.js"></script>
+<script type="text/javascript" src="<?= $config->full_root_path ?>/categories/media/functions~v1.8.3-3.js"></script>
 
 <? $current_module->load_extensions("index", "top"); ?>
 
