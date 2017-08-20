@@ -1,6 +1,10 @@
 
 # Categories Module Change Log
 
+## [1.9.3] - 2017-08-19
+
+- Improved records browser navigation.
+
 ## [1.9.2] - 2017-08-11
 
 - Improved categories browser filtering functionality.
