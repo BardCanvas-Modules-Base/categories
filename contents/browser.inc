@@ -195,7 +195,7 @@ $current_module->load_extensions("browser", "per_record_function_hooks");
         
         <tbody>
         <? foreach( $records as $row ): ?>
-            <tr data-record-id="<?= $row->id_category ?>">
+            <tr data-record-id="<?= $row->id_category ?>" onclick="$(this).toggleClass('clicked')">
                 
                 <!-- Path -->
                 <td>
