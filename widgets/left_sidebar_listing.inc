@@ -45,7 +45,7 @@ $lines      = array();
 if( empty($listing) ) return "";
 
 $reordered = array();
-foreach($listing as $row) $reordered[$row->path] = $row;
+foreach($listing as $row) $reordered[strtolower("/" . trim(dirname($row->path) . "/" . $row->title, "/"))] = $row;
 ksort($reordered);
 $is_tree = false;
 foreach($reordered as $path => $category)
@@ -71,7 +71,9 @@ foreach($listing as $row)
     $closer      = empty($level) ? "" : "</span>";
     $added_class = $template->get("current_category_slug") == $row->slug ? "selected" : "";
     $added_class .= $row->visibility == "public" ? "" : " important";
-    $lines[] = "<a class='item $added_class' data-level='$level' href='{$config->full_root_url}/category/{$row->slug}/'
+    $treated_path = htmlspecialchars(strtolower("/" . trim(dirname($row->path) . "/" . $row->title, "/")));
+    $lines[] = "<a class='item $added_class' data-item-type='categories_listing_link' data-level='$level'
+                   data-slug-path='{$row->path}' href='{$config->full_root_url}/category/{$row->slug}/'
                    >{$opener}{$row->title}{$closer}</a>";
 }
 
