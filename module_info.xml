@@ -46,7 +46,8 @@
     -->
     
     <widgets>
-        <widget for="left_sidebar" id="listing" type="php" is_clonable="false" file="left_sidebar_listing.inc" />
+        <widget for="left_sidebar" id="listing" type="php" is_clonable="false" file="left_sidebar_listing.inc"
+                added_classes="categories_listing" />
     </widgets>
     
     <extension_areas_info><![CDATA[
