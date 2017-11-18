@@ -1,6 +1,11 @@
 
 # Categories Module Change Log
 
+## [1.9.4] - 2017-11-18
+
+- Improved ordering on the listing widget.
+- Added widget classes.
+
 ## [1.9.3] - 2017-08-19
 
 - Improved records browser navigation.
