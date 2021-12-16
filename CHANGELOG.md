@@ -1,6 +1,10 @@
 
 # Categories Module Change Log
 
+## [1.9.5] - 2021-12-15
+
+- Input sanitization on the `get` method of the repository class.
+
 ## [1.9.4] - 2017-11-18
 
 - Improved ordering on the listing widget.
