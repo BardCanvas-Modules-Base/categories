@@ -2,7 +2,6 @@
 namespace hng2_modules\categories;
 
 use hng2_repository\abstract_repository;
-use function Sodium\add;
 
 class categories_repository extends abstract_repository
 {
