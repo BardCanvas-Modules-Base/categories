@@ -1,6 +1,10 @@
 
 # Categories Module Change Log
 
+## [1.9.6] - 2021-12-16
+
+- Removed bogus function call.
+
 ## [1.9.5] - 2021-12-15
 
 - Input sanitization on the `get` method of the repository class.
