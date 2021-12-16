@@ -2,6 +2,7 @@
 namespace hng2_modules\categories;
 
 use hng2_repository\abstract_repository;
+use function Sodium\add;
 
 class categories_repository extends abstract_repository
 {
@@ -28,6 +29,10 @@ class categories_repository extends abstract_repository
     public function get($id_or_slug, $forced = false)
     {
         global $object_cache, $mem_cache;
+        
+        if( preg_match('/[^a-z0-9._-]/i', $id_or_slug) ) return null;
+        
+        if( ! is_numeric($id_or_slug) ) $id_or_slug = addslashes($id_or_slug);
         
         if( ! $forced )
         {
